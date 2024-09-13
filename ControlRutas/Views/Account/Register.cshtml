@@ -1,0 +1,99 @@
+﻿@using ControlRutas.Data;
+@model ControlRutas.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Registrarse";
+    ControlRutasEntities db = new ControlRutasEntities();
+}
+
+<main aria-labelledby="title">
+    <h2 id="title">@ViewBag.Title.</h2>
+
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <h4>Cree una cuenta nueva.</h4>
+        <hr />
+        <div class="row">
+            @Html.LabelFor(m => m.PrimerNombre, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.PrimerNombre, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            @Html.LabelFor(m => m.SegundoNombre, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.SegundoNombre, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            @Html.LabelFor(m => m.PrimerApellido, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.PrimerApellido, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            @Html.LabelFor(m => m.SegundoApellido, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.SegundoApellido, new { @class = "form-control" })
+            </div>
+        </div>
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="row">
+            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            @Html.LabelFor(m => m.NumeroTelefono, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.NumeroTelefono, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            @Html.LabelFor(m => m.id_tipo_usuario, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                <select name="id_tipo_usuario" id="id_tipo_usuario" class="form-control">
+                    <option value="">Seleccione un tipo de usuario</option>
+                    @foreach (var item in db.TiposUsuarios)
+                    {
+                        <option value="@item.Id">@item.Nombre</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            @Html.LabelFor(m => m.idEstablecimiento, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                <select name="idEstablecimiento" id="idEstablecimiento" class="form-control">
+                    <option value="">Seleccione un establecimiento educativo</option>
+                    @foreach (var item in db.EstablecimientosEducativos)
+                    {
+                        <option value="@item.Id">@item.Nombre</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="offset-md-2 col-md-10">
+                <input type="submit" value="Registrarse" class="btn btn-outline-dark" />
+            </div>
+        </div>
+    }
+</main>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

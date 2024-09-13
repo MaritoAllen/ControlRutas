@@ -1,0 +1,72 @@
+﻿@model ControlRutas.Data.Estudiantes
+
+@{
+    ControlRutas.Data.ControlRutasEntities db = new ControlRutas.Data.ControlRutasEntities();
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="col">
+    <div class="row">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Datos Del Estudiante</h4>
+                </div>
+                <div class="card-body">
+
+                    <dl class="dl-horizontal">
+                        <dt>
+                            <label for="PrimerNombre" class="col-form-label">Primer Nombre</label>
+                        </dt>
+
+                        <dd>
+                            <p>@Model.PrimerNombre @Model.SegundoNombre @Model.PrimerApellido @Model.SegundoApellido</p>
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Estado)
+                        </dt>
+
+                        <dd>
+                            @(Model.Estado ? "Activo" : "Inactivo")
+                        </dd>
+
+                        <dt>
+                            <label for="NombreEstablecimiento" class="col-form-label">Establecimiento Educativo</label>
+                        </dt>
+
+                        <dd>
+                            <p>@Model.EstablecimientosEducativos.Nombre</p>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Usuarios Asignados</h4>
+                </div>
+                <div class="card-body">
+                    @foreach(ControlRutas.Data.UsuariosEstudiantes usuario in Model.UsuariosEstudiantes)
+                    {
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5>@usuario.Usuarios.PrimerNombre @usuario.Usuarios.SegundoNombre @usuario.Usuarios.PrimerApellido @usuario.Usuarios.SegundoApellido</h5>
+                                    <p>@usuario.Usuarios.Email</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

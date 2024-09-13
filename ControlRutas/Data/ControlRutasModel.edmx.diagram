@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c63353bbf1f44b39b3efe37305b94670" Name="Diagram1" ZoomLevel="21">
+        <EntityTypeShape EntityType="ControlRutasModel.AspNetRoles" Width="1.5" PointX="5.75" PointY="2.5" />
+        <EntityTypeShape EntityType="ControlRutasModel.AspNetUserClaims" Width="1.5" PointX="10.25" PointY="3.625" />
+        <EntityTypeShape EntityType="ControlRutasModel.AspNetUserLogins" Width="1.5" PointX="10.25" PointY="1" />
+        <EntityTypeShape EntityType="ControlRutasModel.AspNetUsers" Width="1.5" PointX="8" PointY="1.375" />
+        <AssociationConnector Association="ControlRutasModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="ControlRutasModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="ControlRutasModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="ControlRutasModel.EstablecimientosEducativos" Width="1.5" PointX="0.75" PointY="15.5" />
+        <EntityTypeShape EntityType="ControlRutasModel.Estudiantes" Width="1.5" PointX="3" PointY="24.875" />
+        <EntityTypeShape EntityType="ControlRutasModel.EstudiantesMediosTransporte" Width="1.5" PointX="5.25" PointY="20.75" />
+        <EntityTypeShape EntityType="ControlRutasModel.Eventos" Width="1.5" PointX="5.25" PointY="25.25" />
+        <EntityTypeShape EntityType="ControlRutasModel.MediosTransporte" Width="1.5" PointX="3" PointY="15" />
+        <EntityTypeShape EntityType="ControlRutasModel.NoUsoRutasMediosTransporte" Width="1.5" PointX="7.5" PointY="24.25" />
+        <EntityTypeShape EntityType="ControlRutasModel.RutasMediosTransporte" Width="1.5" PointX="7.5" PointY="27" />
+        <EntityTypeShape EntityType="ControlRutasModel.TiposEventos" Width="1.5" PointX="3" PointY="21.125" />
+        <EntityTypeShape EntityType="ControlRutasModel.TiposMediosTransporte" Width="1.5" PointX="0.75" PointY="12.875" />
+        <EntityTypeShape EntityType="ControlRutasModel.TiposUsuarios" Width="1.5" PointX="3.75" PointY="12.125" />
+        <EntityTypeShape EntityType="ControlRutasModel.Usuarios" Width="1.5" PointX="6" PointY="15" />
+        <EntityTypeShape EntityType="ControlRutasModel.UsuariosEstudiantes" Width="1.5" PointX="8.25" PointY="20.5" />
+        <EntityTypeShape EntityType="ControlRutasModel.UsuariosMediosTransporte" Width="1.5" PointX="8.25" PointY="15.875" />
+        <AssociationConnector Association="ControlRutasModel.FK__MediosTra__idCod__6B24EA82" />
+        <AssociationConnector Association="ControlRutasModel.FK__Usuarios__idEsta__07C12930" />
+        <AssociationConnector Association="ControlRutasModel.FK_Estudiantes_EstablecimientosEducativos" />
+        <AssociationConnector Association="ControlRutasModel.FK__Estudiant__idCod__72C60C4A" />
+        <AssociationConnector Association="ControlRutasModel.FK__Eventos__idEstud__7F2BE32F" />
+        <AssociationConnector Association="ControlRutasModel.FK__UsuariosE__idEst__6383C8BA" />
+        <AssociationConnector Association="ControlRutasModel.FK__Estudiant__idCod__73BA3083" />
+        <AssociationConnector Association="ControlRutasModel.FK__NoUsoRuta__idEst__797309D9" />
+        <AssociationConnector Association="ControlRutasModel.FK__RutasMedi__idEst__76969D2E" />
+        <AssociationConnector Association="ControlRutasModel.FK__Eventos__idTipoE__7E37BEF6" />
+        <AssociationConnector Association="ControlRutasModel.FK__MediosTra__idCod__693CA210" />
+        <AssociationConnector Association="ControlRutasModel.FK__MediosTra__idTip__6C190EBB" />
+        <AssociationConnector Association="ControlRutasModel.FK__UsuariosM__idCod__6FE99F9F" />
+        <AssociationConnector Association="ControlRutasModel.FK_Usuarios_TiposUsuarios" />
+        <AssociationConnector Association="ControlRutasModel.FK__UsuariosE__idUsu__628FA481" />
+        <AssociationConnector Association="ControlRutasModel.FK__UsuariosM__idCod__6EF57B66" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
