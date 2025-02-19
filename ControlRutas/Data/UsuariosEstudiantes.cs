@@ -19,7 +19,7 @@ namespace ControlRutas.Data
         public int IdUsuario { get; set; }
         public int IdEstudiante { get; set; }
     
-        public virtual Estudiantes Estudiantes { get; set; }
         public virtual Usuarios Usuarios { get; set; }
+        public virtual Estudiantes Estudiantes { get; set; }
     }
 }

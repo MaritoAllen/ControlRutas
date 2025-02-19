@@ -1,16 +1,25 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+@using ControlRutas.DTO
+@using ControlRutas.Helpers
+@{
+    UsuarioOB usuarioOB = UsuarioActual.ObtenerUsuario();
+}
+
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Control de Rutas</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Content/sweetalert2.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-warning">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark" style="background-color: #669bbc">
         <div class="container">
             @Html.ActionLink("Control de Rutas", "Index", "Home", new { area = "" }, new { @class = "navbar-brand text-dark" })
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar navegación" aria-controls="navbarSupportedContent"
@@ -19,11 +28,27 @@
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Estudiantes", "", "Estudiantes", new { area = "" }, new { @class = "nav-link text-dark" })</li>
-                    <li>@Html.ActionLink("Medios Transporte", "", "Medios Transporte", new { area = "" }, new { @class = "nav-link text-dark" })</li>
-                    <li>@Html.ActionLink("Contacto", "Contact", "Home", new { area = "" }, new { @class = "nav-link text-dark" })</li>
+                    @if (Request.IsAuthenticated)
+                    {
+                        if (usuarioOB.IdTipoUsuario == 2 || usuarioOB.IdTipoUsuario == 1)
+                        {
+                            <li>@Html.ActionLink("Usuarios", "", "Usuarios", new { area = "" }, new { @class = "nav-link text-dark" })</li>
+                        }
+                        if (usuarioOB.IdTipoUsuario == 3 || usuarioOB.IdTipoUsuario == 4 || usuarioOB.IdTipoUsuario == 2 || usuarioOB.IdTipoUsuario == 1)
+                        {
+                            <li>@Html.ActionLink("Medios Transporte", "", "MediosTransportes", new { area = "" }, new { @class = "nav-link text-dark" })</li>
+                        }
+                        if (usuarioOB.IdTipoUsuario == 5 || usuarioOB.IdTipoUsuario == 2 || usuarioOB.IdTipoUsuario == 1)
+                        {
+                            <li>@Html.ActionLink("Estudiantes", "", "Estudiantes", new { area = "" }, new { @class = "nav-link text-dark" })</li>
+                        }
+                        if (usuarioOB.IdTipoUsuario == 1)
+                        {
+                            <li>@Html.ActionLink("Establecimientos Educativos", "", "EstablecimientosEducativos", new { area = "" }, new { @class = "nav-link text-dark" })</li>
+                        }
+                    }
                 </ul>
-                 @Html.Partial("_LoginPartial")
+                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </nav>
@@ -31,12 +56,10 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Control de Rutas</p>
+            <p>&copy; @DateTime.Now.Year - Control de Rutas - Desarrollado por VIA.SA - Todos los derechos reservados</p>
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
 </html>

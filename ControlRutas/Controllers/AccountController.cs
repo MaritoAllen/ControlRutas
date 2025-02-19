@@ -15,6 +15,13 @@ using Microsoft.IdentityModel.Tokens;
 using System.Configuration;
 using System.Text;
 using ControlRutas.Data;
+using System.IO.Compression;
+using System.IO;
+using System.Net.Mail;
+using System.Web.Http.Results;
+using ControlRutas.Services;
+using ControlRutas.DTO;
+using ControlRutas.Helpers;
 
 namespace ControlRutas.Controllers
 {
@@ -23,12 +30,14 @@ namespace ControlRutas.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private readonly FirebaseService _firebaseService;
 
         public AccountController()
         {
+            _firebaseService = new FirebaseService();
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -143,7 +152,7 @@ namespace ControlRutas.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public ActionResult NuevoUsuario()
         {
             return View();
         }
@@ -153,7 +162,7 @@ namespace ControlRutas.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> NuevoUsuario(RegisterViewModel model)
         {
             ControlRutasEntities db = new ControlRutasEntities();
             if (ModelState.IsValid)
@@ -170,12 +179,25 @@ namespace ControlRutas.Controllers
                     SegundoApellido = model.SegundoApellido,
                     IdTipoUsuario = model.id_tipo_usuario,
                     Estado = 1,
-                    IdEstablecimiento = model.idEstablecimiento
+                    MessageToken = ""
                 };
+
+                
                 var result = await UserManager.CreateAsync(user, model.Password);
+
                 db.Usuarios.Add(usuarios);
+                UsuariosEstablecimientos usuariosEstablecimientos = new UsuariosEstablecimientos()
+                {
+                    IdEstablecimientoEducativo = model.idEstablecimiento,
+                    IdUsuario = usuarios.Id,
+                    GUID = Guid.NewGuid().ToString(),
+                    Activo = true
+                };
+                db.UsuariosEstablecimientos.Add(usuariosEstablecimientos);
                 if (result.Succeeded)
                 {
+                    var response = _firebaseService.RegisterUserAsync(model.Email, model.Password, user.Id);
+
                     try
                     {
                         db.SaveChanges();
@@ -185,17 +207,13 @@ namespace ControlRutas.Controllers
                         return View(model);
                     }
 
-
-
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
                     // Para obtener más información sobre cómo habilitar la confirmación de cuentas y el restablecimiento de contraseña, visite https://go.microsoft.com/fwlink/?LinkID=320771
                     // Enviar un correo electrónico con este vínculo
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirmar la cuenta", "Para confirmar su cuenta, haga clic <a href=\"" + callbackUrl + "\">aquí</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Usuarios");
                 }
                 AddErrors(result);
             }
@@ -253,6 +271,73 @@ namespace ControlRutas.Controllers
             return View(model);
         }
 
+        // ...
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<JsonResult> ForgotPasswordJSON(ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await UserManager.FindByNameAsync(model.Email);
+                if (user == null)
+                {
+                    return Json(new { success = false, message = "Usuario no encontrado" });
+                }
+
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                string token = CompressToken(code);
+
+                using (var message = new MailMessage())
+                {
+                    message.To.Add(model.Email);
+                    message.Subject = "Password Reset";
+                    message.Body = $"A continuación se muestra el token para restablecer la contraseña: {token}";
+
+                    using (var smtpClient = new SmtpClient("smtp.gmail.com", 587)) // Ajusta host y puerto
+                    {
+                        smtpClient.Credentials = new System.Net.NetworkCredential("marito.kun1@gmail.com", "jxiy sxdq tphg uxfx");
+                        smtpClient.EnableSsl = true; // Habilitar SSL
+
+                        await smtpClient.SendMailAsync(message);
+                    }
+                }
+
+                return Json(new { success = true, message = "Correo Enviado" });
+            }
+
+            return Json(new { success = false, message = "Invalid model state" });
+        }
+
+        public static string CompressToken(string token)
+        {
+            byte[] tokenBytes = Encoding.UTF8.GetBytes(token);
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                using (GZipStream gzipStream = new GZipStream(memoryStream, CompressionMode.Compress))
+                {
+                    gzipStream.Write(tokenBytes, 0, tokenBytes.Length);
+                }
+                return Convert.ToBase64String(memoryStream.ToArray());
+            }
+        }
+
+        public static string DecompressToken(string compressedToken)
+        {
+            byte[] compressedTokenBytes = Convert.FromBase64String(compressedToken);
+            using (MemoryStream memoryStream = new MemoryStream(compressedTokenBytes))
+            {
+                using (GZipStream gzipStream = new GZipStream(memoryStream, CompressionMode.Decompress))
+                {
+                    using (MemoryStream resultStream = new MemoryStream())
+                    {
+                        gzipStream.CopyTo(resultStream);
+                        return Encoding.UTF8.GetString(resultStream.ToArray());
+                    }
+                }
+            }
+        }
+
         //
         // GET: /Account/ForgotPasswordConfirmation
         [AllowAnonymous]
@@ -293,6 +378,28 @@ namespace ControlRutas.Controllers
             }
             AddErrors(result);
             return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<JsonResult> ResetPasswordJson(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Json(new { success = false, message = "Invalid model state" });
+            }
+            var user = await UserManager.FindByNameAsync(model.Email);
+            if (user == null)
+            {
+                return Json(new { success = false, message = "User not found" });
+            }
+            var result = await UserManager.ResetPasswordAsync(user.Id, DecompressToken(model.Code), model.Password);
+            if (result.Succeeded)
+            {
+                return Json(new { success = true, message = "Password reset" });
+            }
+            AddErrors(result);
+            return Json(new { success = false, message = "Error resetting password" });
         }
 
         //
@@ -521,6 +628,7 @@ namespace ControlRutas.Controllers
         [AllowAnonymous]
         public async Task<JsonResult> LoginJSON(LoginViewModel model)
         {
+            model.RememberMe = false;
             if (!ModelState.IsValid)
             {
                 return Json(new { success = false, message = "Invalid model state" });
@@ -531,8 +639,25 @@ namespace ControlRutas.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    ControlRutasEntities db = new ControlRutasEntities();
                     string token = GenerateJWTAuth(model.Email);
-                    return Json(new { success = true, message = "Success", token });
+
+                    var fechaHoy = DateTime.Today;
+
+                    Usuarios usuario = db.Usuarios.Where(u => u.Email == model.Email).FirstOrDefault();
+
+                    UsuarioOB usuarioOB;
+                    if (usuario != null)
+                    {
+                        usuarioOB = UsuarioActual.ObtenerUsuario();
+
+                        // Aquí puedes devolver la información del usuario o realizar otras acciones
+                        return Json(new { success = true, message = "Success", token, usuario = usuarioOB });
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "User not found" });
+                    }
                 case SignInStatus.LockedOut:
                     return Json(new { success = false, message = "Locked out" });
                 case SignInStatus.RequiresVerification:
@@ -541,6 +666,59 @@ namespace ControlRutas.Controllers
                 default:
                     return Json(new { success = false, message = "Invalid login attempt" });
             }
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<JsonResult> RegisterJSON(RegisterViewModel model)
+        {
+            ControlRutasEntities db = new ControlRutasEntities();
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                Usuarios usuarios = new Usuarios()
+                {
+                    GUID = user.Id,
+                    Email = model.Email,
+                    NumeroTelefono = model.NumeroTelefono,
+                    PrimerNombre = model.PrimerNombre,
+                    SegundoNombre = model.SegundoNombre,
+                    PrimerApellido = model.PrimerApellido,
+                    SegundoApellido = model.SegundoApellido,
+                    IdTipoUsuario = model.id_tipo_usuario,
+                    Estado = 1
+                };
+
+                UsuariosEstablecimientos usuariosEstablecimientos = new UsuariosEstablecimientos()
+                {
+                    IdEstablecimientoEducativo = model.idEstablecimiento,
+                    IdUsuario = usuarios.Id,
+                    GUID = Guid.NewGuid().ToString(),
+                    Activo = true
+                };
+
+                var result = await UserManager.CreateAsync(user, model.Password);
+                db.Usuarios.Add(usuarios);
+                db.UsuariosEstablecimientos.Add(usuariosEstablecimientos);
+                if (result.Succeeded)
+                {
+                    var response = _firebaseService.RegisterUserAsync(model.Email, model.Password, user.Id);
+                    try
+                    {
+                        db.SaveChanges();
+                    }
+                    catch (Exception e)
+                    {
+                        return Json(new { success = false, message = "Error saving user - " + e.Message });
+                    }
+
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    return Json(new { success = true, message = "Success" });
+                }
+                AddErrors(result);
+            }
+
+            return Json(new { success = false, message = "Invalid model state" });
         }
 
         public static string GenerateJWTAuth(string email)

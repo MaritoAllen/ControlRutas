@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ControlRutas.Data;
+using ControlRutas.DTO;
 using ControlRutas.Security;
 
 namespace ControlRutas.Controllers
@@ -15,11 +16,79 @@ namespace ControlRutas.Controllers
     public class ApiEstablecimientosEducativosController : Controller
     {
         private ControlRutasEntities db = new ControlRutasEntities();
-
-        // GET: ApiEstablecimientosEducativos
-        public JsonResult Index()
+        public JsonResult GetEstablecimientos()
         {
-            return Json(db.EstablecimientosEducativos.ToList(), JsonRequestBehavior.AllowGet);
+            var establecimientos = db.EstablecimientosEducativos.Select(e => new
+            {
+                e.Id,
+                e.GUID,
+                e.Nombre,
+                e.Direccion,
+                e.Latitud,
+                e.Longitud,
+                e.Estado
+            }).ToList();
+
+            return Json(new ResponseRutasDTO
+            {
+                data = establecimientos,
+                message = "Establecimientos cargados correctamente",
+                status = HttpStatusCode.OK,
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult CrearEstablecimiento(EstablecimientosEducativos establecimiento)
+        {
+            if (ModelState.IsValid)
+            {
+                establecimiento.GUID = Guid.NewGuid().ToString();
+                establecimiento.Estado = true;
+                db.EstablecimientosEducativos.Add(establecimiento);
+
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    return Json(new ResponseRutasDTO
+                    {
+                        data = e.InnerException.InnerException.Message,
+                        message = "Error al crear el establecimiento",
+                        status = HttpStatusCode.BadRequest,
+                    }, JsonRequestBehavior.AllowGet);
+                }
+
+                return Json(new ResponseRutasDTO
+                {
+                    data = establecimiento,
+                    message = "Establecimiento creado correctamente",
+                    status = HttpStatusCode.OK,
+                }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new ResponseRutasDTO
+            {
+                data = null,
+                message = "Error al crear el establecimiento",
+                status = HttpStatusCode.BadRequest,
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult DetallesEstablecimiento(string id)
+        {
+            if (id == null)
+            {
+                return Json(HttpStatusCode.BadRequest, JsonRequestBehavior.AllowGet);
+            }
+            EstablecimientosEducativos establecimiento = db.EstablecimientosEducativos.FirstOrDefault(x => x.GUID == id);
+            if (establecimiento == null)
+            {
+                return Json(HttpStatusCode.NotFound, JsonRequestBehavior.AllowGet);
+            }
+            return Json(establecimiento, JsonRequestBehavior.AllowGet);
         }
 
         // GET: ApiEstablecimientosEducativos/Details/5

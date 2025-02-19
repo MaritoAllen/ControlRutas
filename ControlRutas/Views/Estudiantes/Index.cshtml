@@ -1,70 +1,82 @@
 ﻿@model IEnumerable<ControlRutas.Data.Estudiantes>
+@using ControlRutas.DTO
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Estudiantes";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    UsuarioOB usuarioOB = ControlRutas.Helpers.UsuarioActual.ObtenerUsuario();
 }
 
-<h2>Index</h2>
-
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Nuevo Estudiante", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.GUID)
+            Nombre Estudiante
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PrimerNombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SegundoNombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PrimerApellido)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SegundoApellido)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Estado)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EstablecimientosEducativos.GUID)
+            Nombre del Colegio
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.GUID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PrimerNombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SegundoNombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PrimerApellido)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SegundoApellido)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Estado)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EstablecimientosEducativos.GUID)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @if (usuarioOB is UsuarioAdminEstablecimiento || usuarioOB is UsuarioPadre || usuarioOB is UsuarioAdmin)
+    {
+        if (usuarioOB is UsuarioAdminEstablecimiento adminEstablecimiento)
+        {
+            foreach (var item in adminEstablecimiento.Estudiantes)
+            {
+                <tr>
+                    <td>
+                        @item.Nombre
+                    </td>
+                    <td>
+                        @item.Colegio
+                    </td>
+                    <td>
+                        @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Detalle", "Details", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+        }
+        else if (usuarioOB is UsuarioPadre padre)
+        {
+            foreach (HijosDTO hijo in padre.Hijos)
+            {
+                <tr>
+                    <td>
+                        @hijo.Nombre
+                    </td>
+                    <td>
+                        @hijo.Colegio
+                    </td>
+                    <td>
+                        @Html.ActionLink("Editar", "Edit", new { id = hijo.Id }) |
+                        @Html.ActionLink("Detalle", "Details", new { id = hijo.Id })
+                    </td>
+                </tr>
+            }
+        }
+        else if(usuarioOB is UsuarioAdmin admin)
+        {
+            foreach (var item in admin.Estudiantes)
+            {
+                <tr>
+                    <td>
+                        @item.Nombre
+                    </td>
+                    <td>
+                        @item.Colegio
+                    </td>
+                    <td>
+                        @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Detalle", "Details", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+        }
+    }
 
 </table>

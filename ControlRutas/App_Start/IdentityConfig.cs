@@ -11,6 +11,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using ControlRutas.Models;
+using System.Configuration;
+using System.Net.Mail;
 
 namespace ControlRutas
 {
@@ -19,7 +21,11 @@ namespace ControlRutas
         public Task SendAsync(IdentityMessage message)
         {
             // Conecte el servicio de correo electrónico aquí para enviar un correo electrónico.
-            return Task.FromResult(0);
+            SmtpClient client = new SmtpClient();
+            return client.SendMailAsync(ConfigurationManager.AppSettings["SupportEmailAddr"],
+                                        message.Destination,
+                                        message.Subject,
+                                        message.Body);
         }
     }
 

@@ -29,18 +29,23 @@ namespace ControlRutas.Data
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
-        public virtual DbSet<EstablecimientosEducativos> EstablecimientosEducativos { get; set; }
-        public virtual DbSet<Estudiantes> Estudiantes { get; set; }
-        public virtual DbSet<EstudiantesMediosTransporte> EstudiantesMediosTransporte { get; set; }
         public virtual DbSet<Eventos> Eventos { get; set; }
         public virtual DbSet<MediosTransporte> MediosTransporte { get; set; }
-        public virtual DbSet<NoUsoRutasMediosTransporte> NoUsoRutasMediosTransporte { get; set; }
-        public virtual DbSet<RutasMediosTransporte> RutasMediosTransporte { get; set; }
         public virtual DbSet<TiposEventos> TiposEventos { get; set; }
         public virtual DbSet<TiposMediosTransporte> TiposMediosTransporte { get; set; }
         public virtual DbSet<TiposUsuarios> TiposUsuarios { get; set; }
-        public virtual DbSet<Usuarios> Usuarios { get; set; }
         public virtual DbSet<UsuariosEstudiantes> UsuariosEstudiantes { get; set; }
         public virtual DbSet<UsuariosMediosTransporte> UsuariosMediosTransporte { get; set; }
+        public virtual DbSet<UsuariosEstablecimientos> UsuariosEstablecimientos { get; set; }
+        public virtual DbSet<Usuarios> Usuarios { get; set; }
+        public virtual DbSet<RutasMediosTransporte> RutasMediosTransporte { get; set; }
+        public virtual DbSet<NoUsoRutasMediosTransporte> NoUsoRutasMediosTransporte { get; set; }
+        public virtual DbSet<Perfiles> Perfiles { get; set; }
+        public virtual DbSet<PerfilesPermisos> PerfilesPermisos { get; set; }
+        public virtual DbSet<Permisos> Permisos { get; set; }
+        public virtual DbSet<UsuariosPermisos> UsuariosPermisos { get; set; }
+        public virtual DbSet<EstudiantesMediosTransporte> EstudiantesMediosTransporte { get; set; }
+        public virtual DbSet<Estudiantes> Estudiantes { get; set; }
+        public virtual DbSet<EstablecimientosEducativos> EstablecimientosEducativos { get; set; }
     }
 }

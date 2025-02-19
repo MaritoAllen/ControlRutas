@@ -37,11 +37,9 @@ namespace ControlRutas.Controllers
         }
 
         // GET: UsuariosEstudiantes/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
-            ViewBag.IdEstudiante = new SelectList(db.Estudiantes, "Id", "PrimerNombre");
-            ViewBag.IdUsuario = new SelectList(db.Usuarios, "Id", "PrimerNombre");
-            return View();
+            return View(db.Usuarios.FirstOrDefault(x=> x.Id == id));
         }
 
         // POST: UsuariosEstudiantes/Create
@@ -49,19 +47,20 @@ namespace ControlRutas.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,IdUsuario,IdEstudiante")] UsuariosEstudiantes usuariosEstudiantes)
+        public ActionResult Create(int id, int idEstudiante)
         {
-            if (ModelState.IsValid)
+            UsuariosEstudiantes usuariosEstudiantes = new UsuariosEstudiantes()
             {
-                usuariosEstudiantes.GUID = Guid.NewGuid().ToString();
-                db.UsuariosEstudiantes.Add(usuariosEstudiantes);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                GUID = Guid.NewGuid().ToString(),
+                IdEstudiante = idEstudiante,
+                IdUsuario = id
+            };
 
-            ViewBag.IdEstudiante = new SelectList(db.Estudiantes, "Id", "PrimerNombre", usuariosEstudiantes.IdEstudiante);
-            ViewBag.IdUsuario = new SelectList(db.Usuarios, "Id", "PrimerNombre", usuariosEstudiantes.IdUsuario);
-            return View(usuariosEstudiantes);
+            db.UsuariosEstudiantes.Add(usuariosEstudiantes);
+
+            db.SaveChanges();
+
+            return RedirectToAction("Details", "Usuarios", new { id });
         }
 
         // GET: UsuariosEstudiantes/Edit/5
@@ -122,7 +121,7 @@ namespace ControlRutas.Controllers
             UsuariosEstudiantes usuariosEstudiantes = db.UsuariosEstudiantes.Find(id);
             db.UsuariosEstudiantes.Remove(usuariosEstudiantes);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", "Usuarios", new { id = usuariosEstudiantes.IdUsuario });
         }
 
         protected override void Dispose(bool disposing)

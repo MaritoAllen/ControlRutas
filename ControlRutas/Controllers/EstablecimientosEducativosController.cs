@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -46,10 +47,24 @@ namespace ControlRutas.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nombre,Direccion,Latitud,Longitud")] EstablecimientosEducativos establecimientosEducativos)
+        public ActionResult Create([Bind(Include = "Id,Nombre,Direccion,Latitud,Longitud,Estado")] EstablecimientosEducativos establecimientosEducativos, HttpPostedFileBase Foto)
         {
             if (ModelState.IsValid)
             {
+                if (Foto != null && Foto.ContentLength > 0)
+                {
+                    // Leer el contenido del archivo
+                    using (var binaryReader = new BinaryReader(Foto.InputStream))
+                    {
+                        byte[] fileBytes = binaryReader.ReadBytes(Foto.ContentLength);
+
+                        // Convertir a Base64
+                        string base64String = Convert.ToBase64String(fileBytes);
+
+                        // Guardar el Base64 en el modelo
+                        establecimientosEducativos.Foto = base64String;
+                    }
+                }
                 establecimientosEducativos.GUID = Guid.NewGuid().ToString();
                 establecimientosEducativos.Estado = true;
                 db.EstablecimientosEducativos.Add(establecimientosEducativos);
@@ -80,13 +95,35 @@ namespace ControlRutas.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nombre,Direccion,Latitud,Longitud,Estado")] EstablecimientosEducativos establecimientosEducativos)
+        public ActionResult Edit([Bind(Include = "Id,GUID,Nombre,Direccion,Latitud,Longitud,Estado")] EstablecimientosEducativos establecimientosEducativos, HttpPostedFileBase Foto)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(establecimientosEducativos).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (Foto != null && Foto.ContentLength > 0)
+                {
+                    // Leer el contenido del archivo
+                    using (var binaryReader = new BinaryReader(Foto.InputStream))
+                    {
+                        byte[] fileBytes = binaryReader.ReadBytes(Foto.ContentLength);
+
+                        // Convertir a Base64
+                        string base64String = Convert.ToBase64String(fileBytes);
+
+                        // Guardar el Base64 en el modelo
+                        establecimientosEducativos.Foto = base64String;
+                    }
+                    db.Entry(establecimientosEducativos).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "La Foto es requerida.");
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "No se ha podido guardar los cambios.");
             }
             return View(establecimientosEducativos);
         }

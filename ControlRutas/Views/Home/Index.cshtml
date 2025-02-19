@@ -1,33 +1,170 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@using Microsoft.AspNet.Identity
+@using ControlRutas.Data
+@using ControlRutas.DTO
+@using ControlRutas.Helpers
+
+@{
+    ViewBag.Title = "Inicio";
+    var usuarioid = User.Identity.GetUserId();
+    ControlRutasEntities db = new ControlRutasEntities();
+    var usuario = db.Usuarios.Where(u => u.GUID == usuarioid).FirstOrDefault();
+    UsuarioOB usuarioOB = UsuarioActual.ObtenerUsuario();
 }
 
 <main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
-    </section>
+    <section>
+        <h2>¡Bienvenido! @usuario.PrimerNombre @usuario.PrimerApellido - @usuarioOB.TipoUsuario.ToString()</h2>
 
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </section>
-    </div>
+        <div class="row mt-2">
+            <div class="col-3">
+                <div>
+                    @if (usuario.UsuariosEstablecimientos.FirstOrDefault()?.EstablecimientosEducativos?.Foto != null)
+                    {
+                        <img src="data:image/png;base64,@usuario.UsuariosEstablecimientos.FirstOrDefault().EstablecimientosEducativos.Foto" alt="Imagen del establecimiento" />
+                    }
+                    else
+                    {
+                        <p></p>
+                    }
+                </div>
+            </div>
+            <div class="col-9">
+                @if (usuarioOB is UsuarioAdminEstablecimiento || usuarioOB is UsuarioPadre)
+                {
+                    <div class="row mb-2">
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4>Estudiantes</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div style="max-height:10rem; overflow-y:auto;">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Estudiante</th>
+                                                    <th>Dirección Origen</th>
+                                                    <th>Dirección Destino</th>
+                                                    <th>Ruta</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (usuarioOB is UsuarioAdminEstablecimiento adminEstablecimiento)
+                                                {
+                                                    foreach (HijosDTO hijo in adminEstablecimiento.Estudiantes)
+                                                    {
+                                                        <tr>
+                                                            <td>@hijo.Nombre</td>
+                                                            <td>@hijo.DireccionOrigen</td>
+                                                            <td>@hijo.DireccionDestino</td>
+                                                            <td>@hijo.RutaGuid</td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else if (usuarioOB is UsuarioPadre padre)
+                                                {
+                                                    foreach (HijosDTO hijo in padre.Hijos)
+                                                    {
+                                                        <tr>
+                                                            <td>@hijo.Nombre</td>
+                                                            <td>@hijo.DireccionOrigen</td>
+                                                            <td>@hijo.DireccionDestino</td>
+                                                            <td>@hijo.RutaGuid</td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (usuarioOB is UsuarioAdminEstablecimiento || usuarioOB is UsuarioDueñoBuses || usuarioOB is UsuarioPiloto)
+                {
+                    <div class="row">
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4>
+                                        Medios de Transporte
+                                    </h4>
+                                </div>
+                                <div class="card-body">
+                                    <div style="max-height:10rem">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        Placa
+                                                    </th>
+                                                    <th>
+                                                        Identificador
+                                                    </th>
+                                                    <th>
+                                                        Estado
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (usuarioOB is UsuarioAdminEstablecimiento adminEstablecimiento)
+                                                {
+                                                    foreach (MedioTransporteDTO ruta in adminEstablecimiento.MedioTransportes)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                @ruta.Placa
+                                                            </td>
+                                                            <td>
+                                                                @ruta.Identificador
+                                                            </td>
+                                                            <td>
+                                                                @ruta.Estado
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else if (usuarioOB is UsuarioDueñoBuses dueño)
+                                                {
+                                                    foreach (MedioTransporteDTO ruta in dueño.Buses)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                @ruta.Placa
+                                                            </td>
+                                                            <td>
+                                                                @ruta.Identificador
+                                                            </td>
+                                                            <td>
+                                                                @ruta.Estado
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }else if(usuarioOB is UsuarioPiloto piloto)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @piloto.Bus.Placa
+                                                        </td>
+                                                        <td>
+                                                            @piloto.Bus.Identificador
+                                                        </td>
+                                                        <td>
+                                                            @piloto.Bus.Estado
+                                                        </td>
+                                                    </tr>
+                                                }
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
 </main>

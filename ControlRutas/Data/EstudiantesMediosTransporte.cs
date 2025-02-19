@@ -23,20 +23,29 @@ namespace ControlRutas.Data
     
         public int Id { get; set; }
         public string GUID { get; set; }
-        public int IdCodigoEstudiante { get; set; }
-        public int IdCodigoMedioTransporte { get; set; }
+        public int IdEstudiante { get; set; }
+        public int IdMedioTransporte { get; set; }
         public string DireccionOrigen { get; set; }
         public string LatitudOrigen { get; set; }
         public string LongitudOrigen { get; set; }
         public string DireccionDestino { get; set; }
         public string LatitudDestino { get; set; }
         public string LongitudDestino { get; set; }
+        public int Orden { get; set; }
+        public bool Lunes { get; set; }
+        public bool Martes { get; set; }
+        public bool Miercoles { get; set; }
+        public bool Jueves { get; set; }
+        public bool Viernes { get; set; }
+        public bool Sabado { get; set; }
+        public bool Domingo { get; set; }
+        public bool Activo { get; set; }
     
-        public virtual Estudiantes Estudiantes { get; set; }
         public virtual MediosTransporte MediosTransporte { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NoUsoRutasMediosTransporte> NoUsoRutasMediosTransporte { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RutasMediosTransporte> RutasMediosTransporte { get; set; }
+        public virtual Estudiantes Estudiantes { get; set; }
     }
 }

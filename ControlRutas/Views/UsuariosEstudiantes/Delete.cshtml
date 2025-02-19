@@ -1,49 +1,22 @@
 ﻿@model ControlRutas.Data.UsuariosEstudiantes
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Desasignar Estudiante";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
+<h2>Desasignar</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h5>Esta seguro de desasignar el estudiante @Model.Estudiantes.PrimerNombre @Model.Estudiantes.SegundoNombre @Model.Estudiantes.PrimerApellido @Model.Estudiantes.SegundoApellido del usuario @Model.Usuarios.PrimerNombre @Model.Usuarios.SegundoNombre @Model.Usuarios.PrimerApellido @Model.Usuarios.SegundoApellido?</h5>
+
 <div>
-    <h4>UsuariosEstudiantes</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.GUID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.GUID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Estudiantes.GUID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Estudiantes.GUID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Usuarios.GUID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Usuarios.GUID)
-        </dd>
-
-    </dl>
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Desasignar" class="btn btn-warning" /> |
+            @Html.ActionLink("Regresar", "Details", "Usuarios", new { id = Model.Usuarios.Id }, null)
         </div>
     }
 </div>

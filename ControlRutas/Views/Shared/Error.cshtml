@@ -1,9 +1,18 @@
-﻿@model System.Web.Mvc.HandleErrorInfo
+﻿@model HandleErrorInfo
 
 @{
     ViewBag.Title = "Error";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">Error al procesar la solicitud.</h2>
+<h2>Error</h2>
+<p>Lo sentimos, ha ocurrido un error inesperado.</p>
+<p>Por favor, inténtalo de nuevo más tarde.</p>
 
+@if (Model != null)
+{
+    <p>Detalles: @Model.Exception.Message</p>
+    if (Model.Exception.InnerException != null)
+    {
+        <p>Inner: @Model.Exception.InnerException.Message</p>
+    }
+}

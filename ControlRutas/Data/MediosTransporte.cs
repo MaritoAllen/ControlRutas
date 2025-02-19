@@ -17,8 +17,8 @@ namespace ControlRutas.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public MediosTransporte()
         {
-            this.EstudiantesMediosTransporte = new HashSet<EstudiantesMediosTransporte>();
             this.UsuariosMediosTransporte = new HashSet<UsuariosMediosTransporte>();
+            this.EstudiantesMediosTransporte = new HashSet<EstudiantesMediosTransporte>();
         }
     
         public int Id { get; set; }
@@ -32,12 +32,12 @@ namespace ControlRutas.Data
         public string Color { get; set; }
         public bool Estado { get; set; }
     
-        public virtual EstablecimientosEducativos EstablecimientosEducativos { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EstudiantesMediosTransporte> EstudiantesMediosTransporte { get; set; }
-        public virtual Usuarios Usuarios { get; set; }
         public virtual TiposMediosTransporte TiposMediosTransporte { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsuariosMediosTransporte> UsuariosMediosTransporte { get; set; }
+        public virtual Usuarios Usuarios { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EstudiantesMediosTransporte> EstudiantesMediosTransporte { get; set; }
+        public virtual EstablecimientosEducativos EstablecimientosEducativos { get; set; }
     }
 }

@@ -28,6 +28,7 @@ namespace ControlRutas.Data
         public int Orden { get; set; }
         public System.DateTime HoraSalida { get; set; }
         public System.DateTime HoraLlegada { get; set; }
+        public string Estado { get; set; }
     
         public virtual EstudiantesMediosTransporte EstudiantesMediosTransporte { get; set; }
     }

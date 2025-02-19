@@ -2,7 +2,7 @@
 
 @{
     ControlRutas.Data.ControlRutasEntities db = new ControlRutas.Data.ControlRutasEntities();
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalle";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -18,7 +18,7 @@
 
                     <dl class="dl-horizontal">
                         <dt>
-                            <label for="PrimerNombre" class="col-form-label">Primer Nombre</label>
+                            <label for="PrimerNombre" class="col-form-label">Nombre Completo</label>
                         </dt>
 
                         <dd>
@@ -57,16 +57,240 @@
                                 <div class="col-12">
                                     <h5>@usuario.Usuarios.PrimerNombre @usuario.Usuarios.SegundoNombre @usuario.Usuarios.PrimerApellido @usuario.Usuarios.SegundoApellido</h5>
                                     <p>@usuario.Usuarios.Email</p>
+                                    <a href="@Url.Action("Details", "Usuarios", new { id = usuario.Usuarios.Id })" class="btn btn-primary">Ver Detalles</a>
                                 </div>
                             </div>
                         </div>
                     }
                 </div>
             </div>
+            <div class="card mt-2">
+                <div class="card-header">
+                    <h4 class="card-title">
+                        Transportes Asignados
+                    </h4>
+                </div>
+                <div class="card-body">
+                    @if (Model.EstudiantesMediosTransporte.Count > 0)
+                    {
+                        foreach (ControlRutas.Data.EstudiantesMediosTransporte transporte in Model.EstudiantesMediosTransporte)
+                        {
+                            <div class="list-group">
+                                <div class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h5>@transporte.MediosTransporte.Identificador</h5>
+                                            <p>@transporte.MediosTransporte.Placa</p>
+                                            <div class="row">
+                                                <p><b>Días de la Semana asignados:</b></p>
+                                                @if (transporte.Lunes)
+                                                {
+                                                    <div class="col-sm-2">
+                                                        <p>Lunes</p>
+                                                    </div>
+                                                }
+                                                @if (transporte.Martes)
+                                                {
+                                                    <div class="col-sm-2">
+                                                        <p>Martes</p>
+                                                    </div>
+                                                }
+                                                @if (transporte.Miercoles)
+                                                {
+                                                    <div class="col-sm-2">
+                                                        <p>Miércoles</p>
+                                                    </div>
+                                                }
+                                                @if (transporte.Jueves)
+                                                {
+                                                    <div class="col-sm-2">
+                                                        <p>Jueves</p>
+                                                    </div>
+                                                }
+                                                @if (transporte.Viernes)
+                                                {
+                                                    <div class="col-sm-2">
+                                                        <p>Viernes</p>
+                                                    </div>
+                                                }
+                                                @if (transporte.Sabado)
+                                                {
+                                                    <div class="col-sm-2">
+                                                        <p>Sábado</p>
+                                                    </div>
+                                                }
+                                                @if (transporte.Domingo)
+                                                {
+                                                    <div class="col-sm-2">
+                                                        <p>Domingo</p>
+                                                    </div>
+                                                }
+                                            </div>
+                                            <p>Ruta Activa: @(transporte.Activo ? "Sí" : "No")</p>
+                                            <a href="@Url.Action("Details", "MediosTransportes", new { id = transporte.MediosTransporte.Id })" class="btn btn-primary">Ver Detalles</a>
+                                            <a href="@Url.Action("Edit", "EstudiantesMediosTransportes", new { id = transporte.Id })" class="btn btn-warning">Editar</a>
+                                            @if (transporte.Activo)
+                                            {
+                                                <a class="btn btn-warning" href="@Url.Action("Inactivar", "EstudiantesMediosTransportes", new { id = transporte.Id })">Inactivar</a>
+                                            }
+                                            else
+                                            {
+                                                <a class="btn btn-success" href="@Url.Action("Activar", "EstudiantesMediosTransportes", new { id = transporte.Id })">Activar</a>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <div class="col">
+                                <div class="alert alert-warning" role="alert">
+                                    No se han asignado transportes a este estudiante
+                                </div>
+                            </div>
+                        </div>
+                        
+                    }
+                    <div class="col mt-2">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTransporte">
+                            Asignar Transporte
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card mt-2">
+                <div class="card-header">
+                    <h4 class="card-title">
+                        Inasistencias Programadas
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <div class="list-group">
+                                @foreach (var inasistencia in Model.EstudiantesMediosTransporte
+                                    .Where(x => x.NoUsoRutasMediosTransporte.Count > 0)
+                                    .SelectMany(x => x.NoUsoRutasMediosTransporte)
+                                    .Where(inasistencia => inasistencia.Fecha.Day >= DateTime.Now.Day && inasistencia.Fecha.Month >= DateTime.Now.Month && inasistencia.Fecha.Year >= DateTime.Now.Year))
+                                {
+                                    <div class="list-group-item">
+                                        @inasistencia.Fecha.ToShortDateString() - @inasistencia.Motivo
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Regresar", "Index")
 </p>
+<div class="modal fade" id="modalTransporte" tabindex="-1" aria-labelledby="modalTransporteLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalTransporteLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("AsignarEstudianteTransporte", "Estudiantes", FormMethod.Post, new { id = "frmAsignar" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="IdEstudiante" value="@Model.Id" />
+                    <input type="hidden" name="GUID" />
+                    <div class="form-group">
+                        <label for="IdMedioTransporte" class="control-label">Medio de Transporte</label>
+                        <select id="IdMedioTransporte" class="form-control" name="IdMedioTransporte">
+                            <option value="">Seleccione un medio de transporte</option>
+                            @foreach (var transporte in db.MediosTransporte
+                                .Where(mt => !mt.EstudiantesMediosTransporte
+                                    .Any(em => em.IdEstudiante == Model.Id)))
+                            {
+                                <option value="@transporte.Id">@transporte.Identificador</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="hidden" class="form-control" name="DireccionOrigen" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="hidden" class="form-control" name="LatitudOrigen" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="hidden" class="form-control" name="LongitudOrigen" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="DireccionDestino" class="control-label">Dirección de Destino</label>
+                        <input type="text" class="form-control" name="DireccionDestino" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="LatitudDestino" class="control-label">Latitud de Destino</label>
+                        <input type="text" class="form-control" name="LatitudDestino" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="LongitudDestino" class="control-label">Longitud de Destino</label>
+                        <input type="text" class="form-control" name="LongitudDestino" />
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col">
+                                <label for="Lunes" class="control-label">Lunes</label>
+                                <input type="checkbox" class="" name="Lunes" id="Lunes" value="true" />
+                            </div>
+                            <div class="col">
+                                <label for="Martes" class="control-label">Martes</label>
+                                <input type="checkbox" class="" name="Martes" id="Martes" value="true" />
+                            </div>
+                            <div class="col">
+                                <label for="Miercoles" class="control-label">Miércoles</label>
+                                <input type="checkbox" class="" name="Miercoles" id="Miercoles" value="true" />
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col">
+                                <label for="Jueves" class="control-label">Jueves</label>
+                                <input type="checkbox" class="" name="Jueves" id="Jueves" value="true" />
+                            </div>
+                            <div class="col">
+                                <label for="Viernes" class="control-label">Viernes</label>
+                                <input type="checkbox" class="" name="Viernes" id="Viernes" value="true" />
+                            </div>
+                            <div class="col">
+                                <label for="Sabado" class="control-label">Sábado</label>
+                                <input type="checkbox" class="" name="Sabado" id="Sabado" value="true" />
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col">
+                                <label for="Domingo" class="control-label">Domingo</label>
+                                <input type="checkbox" class="" name="Domingo" id="Domingo" value="true" />
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" form="frmAsignar" class="btn btn-primary">Asignar Transporte</button>
+            </div>
+        </div>
+    </div>
+</div>

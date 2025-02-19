@@ -5,6 +5,7 @@ using Microsoft.Owin.Security.Jwt;
 using System;
 using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Net.Sockets;
 using System.Web;
 using System.Web.Mvc;
@@ -35,6 +36,24 @@ namespace ControlRutas.Security
             return false;
         }
 
+        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
+        {
+            if (!filterContext.HttpContext.User.Identity.IsAuthenticated)
+            {
+                filterContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                filterContext.HttpContext.Response.ContentType = "application/json";
+                filterContext.HttpContext.Response.Write("{\"error\":\"Unauthorized\"}");
+                filterContext.HttpContext.Response.End();
+            }
+            else
+            {
+                filterContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+                filterContext.HttpContext.Response.ContentType = "application/json";
+                filterContext.HttpContext.Response.Write("{\"error\":\"Forbidden\"}");
+                filterContext.HttpContext.Response.End();
+            }
+        }
+
         private bool ValidateToken(string token)
         {
             // Decodificar la clave secreta desde la configuración, asumiendo que ya está en base64
@@ -62,7 +81,13 @@ namespace ControlRutas.Security
                     }
                 }, out SecurityToken validatedToken);
 
-                return true; // El token es válido
+                if (validatedToken != null)
+                {
+                    return true; // El token es válido
+                }
+
+
+                return false; // El token es válido
             }
             catch (Exception ex)
             {

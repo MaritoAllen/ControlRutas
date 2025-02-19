@@ -1,11 +1,9 @@
 ﻿@model IEnumerable<ControlRutas.Data.UsuariosEstudiantes>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Usuarios";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -13,7 +11,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.GUID)
+
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Estudiantes.GUID)

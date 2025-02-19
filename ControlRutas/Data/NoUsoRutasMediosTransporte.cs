@@ -18,6 +18,7 @@ namespace ControlRutas.Data
         public string GUID { get; set; }
         public int IdEstudianteMedioTransporte { get; set; }
         public System.DateTime Fecha { get; set; }
+        public string Motivo { get; set; }
     
         public virtual EstudiantesMediosTransporte EstudiantesMediosTransporte { get; set; }
     }

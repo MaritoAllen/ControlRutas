@@ -30,13 +30,16 @@ namespace ControlRutas.Data
         public string SegundoApellido { get; set; }
         public int IdEstablecimientoEducativo { get; set; }
         public bool Estado { get; set; }
+        public string Grado { get; set; }
+        public string Seccion { get; set; }
+        public string Identificacion { get; set; }
     
-        public virtual EstablecimientosEducativos EstablecimientosEducativos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EstudiantesMediosTransporte> EstudiantesMediosTransporte { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Eventos> Eventos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsuariosEstudiantes> UsuariosEstudiantes { get; set; }
+        public virtual EstablecimientosEducativos EstablecimientosEducativos { get; set; }
     }
 }

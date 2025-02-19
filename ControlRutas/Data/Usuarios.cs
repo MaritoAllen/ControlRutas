@@ -20,6 +20,8 @@ namespace ControlRutas.Data
             this.MediosTransporte = new HashSet<MediosTransporte>();
             this.UsuariosEstudiantes = new HashSet<UsuariosEstudiantes>();
             this.UsuariosMediosTransporte = new HashSet<UsuariosMediosTransporte>();
+            this.UsuariosEstablecimientos = new HashSet<UsuariosEstablecimientos>();
+            this.UsuariosPermisos = new HashSet<UsuariosPermisos>();
         }
     
         public int Id { get; set; }
@@ -32,9 +34,8 @@ namespace ControlRutas.Data
         public string NumeroTelefono { get; set; }
         public int IdTipoUsuario { get; set; }
         public int Estado { get; set; }
-        public int IdEstablecimiento { get; set; }
+        public string MessageToken { get; set; }
     
-        public virtual EstablecimientosEducativos EstablecimientosEducativos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MediosTransporte> MediosTransporte { get; set; }
         public virtual TiposUsuarios TiposUsuarios { get; set; }
@@ -42,5 +43,9 @@ namespace ControlRutas.Data
         public virtual ICollection<UsuariosEstudiantes> UsuariosEstudiantes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsuariosMediosTransporte> UsuariosMediosTransporte { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UsuariosEstablecimientos> UsuariosEstablecimientos { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UsuariosPermisos> UsuariosPermisos { get; set; }
     }
 }

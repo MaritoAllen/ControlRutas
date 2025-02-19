@@ -18,8 +18,8 @@ namespace ControlRutas.Data
         public EstablecimientosEducativos()
         {
             this.MediosTransporte = new HashSet<MediosTransporte>();
-            this.Usuarios = new HashSet<Usuarios>();
             this.Estudiantes = new HashSet<Estudiantes>();
+            this.UsuariosEstablecimientos = new HashSet<UsuariosEstablecimientos>();
         }
     
         public int Id { get; set; }
@@ -29,12 +29,13 @@ namespace ControlRutas.Data
         public string Latitud { get; set; }
         public string Longitud { get; set; }
         public bool Estado { get; set; }
+        public string Foto { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MediosTransporte> MediosTransporte { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Usuarios> Usuarios { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Estudiantes> Estudiantes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UsuariosEstablecimientos> UsuariosEstablecimientos { get; set; }
     }
 }
