@@ -292,6 +292,7 @@
     <Compile Include="Controllers\ApiEstablecimientosEducativosController.cs" />
     <Compile Include="Controllers\APIEstudiantesController.cs" />
     <Compile Include="Controllers\APIEventosController.cs" />
+    <Compile Include="Controllers\APIMediosTransportesController.cs" />
     <Compile Include="Controllers\EstablecimientosEducativosController.cs" />
     <Compile Include="Controllers\EstudiantesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
