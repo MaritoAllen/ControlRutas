@@ -1,0 +1,139 @@
+﻿@model ControlRutas.Data.Usuarios
+@using ControlRutas.Data
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ControlRutasEntities db = new ControlRutasEntities();
+}
+
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <b>Informacion</b>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                <b>Primer Nombre</b>
+                            </dt>
+
+                            <dd>
+                                @Model.PrimerNombre
+                            </dd>
+
+                            <dt>
+                                <b>Segundo Nombre</b>
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.SegundoNombre)
+                            </dd>
+
+                            <dt>
+                                <b>Primer Apellido</b>
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.PrimerApellido)
+                            </dd>
+
+                            <dt>
+                                <b>Segundo Apellido</b>
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.SegundoApellido)
+                            </dd>
+
+                            <dt>
+                                <b>Email</b>
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Email)
+                            </dd>
+
+                            <dt>
+                                <b>Numero Teléfono</b>
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.NumeroTelefono)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Estado)
+                            </dt>
+
+                            <dd>
+                                @(Model.Estado == 1 ? "Activo" : "Inactivo")
+                            </dd>
+
+                            <dt>
+                                <b>Tipo de Usuario</b>
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.TiposUsuarios.Nombre)
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        @if (Model.IdTipoUsuario == 5)
+        {
+            <div class="card">
+                <div class="card-header">
+                    Estudiantes Asignados
+                </div>
+                <div class="card-body">
+                    <ul>
+                        @foreach (UsuariosEstudiantes estuadiantes in Model.UsuariosEstudiantes)
+                        {
+                            <li class="mt-2">
+                                @estuadiantes.Estudiantes.PrimerNombre @estuadiantes.Estudiantes.PrimerApellido - @estuadiantes.Estudiantes.EstablecimientosEducativos.Nombre - @Html.ActionLink("Ver Estudiante", "Details", "Estudiantes", new { id = estuadiantes.IdEstudiante }, new { @class = "btn btn-info" }) - @if (estuadiantes.Estudiantes.EstudiantesMediosTransporte.Count > 0) { @Html.ActionLink("Ingresar Inasistencia", "Inasistencia", "Estudiantes", new { id = estuadiantes.Estudiantes.GUID }, new { @class = "btn btn-warning" }) <text> - </text> } @Html.ActionLink("Eliminar", "Delete", "UsuariosEstudiantes", new { id = estuadiantes.Id }, new { @class = "btn btn-danger" })
+                            </li>
+                        }
+                    </ul>
+
+                    @Html.ActionLink("Asignar Estudiante", "Create", "UsuariosEstudiantes", new { id = Model.Id }, new { @class = "btn btn-primary" })
+                </div>
+            </div>
+        }
+        else if (Model.IdTipoUsuario == 4)
+        {
+            <div class="card">
+                <div class="card-header">
+                    Rutas Asignadas
+                </div>
+                <div class="card-body">
+                    <ul>
+                        @foreach (MediosTransporte bus in Model.MediosTransporte)
+                        {
+                            <li class="mt-2">
+                                @bus.Placa - @bus.Color - @bus.EstablecimientosEducativos.Nombre
+                                @if (Model.MediosTransporte.Count > 1)
+                                {
+                                    @Html.ActionLink("Eliminar", "Delete", "UsuariosRutas", new { id = bus.Id }, new { @class = "btn btn-danger" })
+                                }
+                            </li>
+                        }
+                    </ul>
+
+                    @Html.ActionLink("Asignar Bus", "AsignarTransporte", "MediosTransportes", new { id = Model.Id }, new { @class = "btn btn-primary" })
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" }) |
+    @Html.ActionLink("Regresar", "Index", new { @class = "btn btn-info" })
+</p>

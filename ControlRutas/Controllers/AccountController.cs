@@ -1,27 +1,28 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using ControlRutas.Models;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Tokens;
-using System.Configuration;
-using System.Text;
-using ControlRutas.Data;
-using System.IO.Compression;
-using System.IO;
-using System.Net.Mail;
-using System.Web.Http.Results;
-using ControlRutas.Services;
+﻿using ControlRutas.Data;
 using ControlRutas.DTO;
 using ControlRutas.Helpers;
+using ControlRutas.Models;
+using ControlRutas.Services;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Owin.Security;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data.Entity;
+using System.Globalization;
+using System.IdentityModel.Tokens.Jwt;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using System.Net.Mail;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Http.Results;
+using System.Web.Mvc;
 
 namespace ControlRutas.Controllers
 {
@@ -628,43 +629,99 @@ namespace ControlRutas.Controllers
         [AllowAnonymous]
         public async Task<JsonResult> LoginJSON(LoginViewModel model)
         {
-            model.RememberMe = false;
-            if (!ModelState.IsValid)
+            // 'this' se usa implícitamente para acceder a miembros como ModelState, SignInManager, Json, db.
+            // El alias 'accountController' no es necesario.
+
+            model.RememberMe = false; // Lógica original mantenida
+
+            if (!ModelState.IsValid) // Acceso directo a ModelState
             {
-                return Json(new { success = false, message = "Invalid model state" });
+                return Json(new // Cast a (object) innecesario
+                {
+                    success = false,
+                    message = "El modelo de datos no es válido." // "Invalid model state"
+                }, JsonRequestBehavior.AllowGet); // Mantenido de tu original (0 es AllowGet)
             }
 
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            // Usar SignInManager directamente. El resultado es un enum SignInStatus.
+            // El parámetro 'lockoutOnFailure' se mantiene como 'false' según tu código.
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
 
             switch (result)
             {
                 case SignInStatus.Success:
-                    ControlRutasEntities db = new ControlRutasEntities();
-                    string token = GenerateJWTAuth(model.Email);
-
-                    var fechaHoy = DateTime.Today;
-
-                    Usuarios usuario = db.Usuarios.Where(u => u.Email == model.Email).FirstOrDefault();
-
-                    UsuarioOB usuarioOB;
-                    if (usuario != null)
+                    // ADVERTENCIA: Revisa la nota sobre la instanciación de DbContext aquí.
+                    using (ControlRutasEntities dbContext = new ControlRutasEntities())
                     {
-                        usuarioOB = UsuarioActual.ObtenerUsuario();
+                        // GenerateJWTAuth es estático en AccountController o un método de instancia.
+                        // Si es estático: AccountController.GenerateJWTAuth(...)
+                        // Si es de instancia: this.GenerateJWTAuth(...) o solo GenerateJWTAuth(...)
+                        string jwtAuth = AccountController.GenerateJWTAuth(model.Email); // Asumiendo que es estático como en el original
 
-                        // Aquí puedes devolver la información del usuario o realizar otras acciones
-                        return Json(new { success = true, message = "Success", token, usuario = usuarioOB });
+                        // Obtener el usuario de la base de datos local de forma asíncrona
+                        Usuarios usuarioEntity = await dbContext.Usuarios
+                            .FirstOrDefaultAsync(u => u.Email == model.Email);
+
+                        if (usuarioEntity == null)
+                        {
+                            // Esto significaría que ASP.NET Identity autenticó al usuario,
+                            // pero no existe un registro correspondiente en tu tabla 'Usuarios'.
+                            // Podría ser una inconsistencia de datos.
+                            return Json(new
+                            {
+                                success = false,
+                                message = "Usuario autenticado pero no encontrado en el sistema local."
+                            }, JsonRequestBehavior.AllowGet);
+                        }
+
+                        // Obtener el UsuarioOB.
+                        // NOTA: UsuarioActual.ObtenerUsuario crea su propio DbContext internamente según la limpieza anterior.
+                        // Para optimizar, considera refactorizar ObtenerUsuario para que acepte un DbContext.
+                        UsuarioOB usuarioOb = UsuarioActual.ObtenerUsuario(usuarioEntity.GUID);
+                        // Si ObtenerUsuario fuera refactorizado:
+                        // UsuarioOB usuarioOb = UsuarioActual.ObtenerUsuario(usuarioEntity.GUID, dbContext);
+
+                        if (usuarioOb == null)
+                        {
+                            // Si ObtenerUsuario devuelve null (ej. tipo de usuario no manejado en su switch interno)
+                            return Json(new
+                            {
+                                success = false,
+                                message = "No se pudo obtener la información detallada del usuario tras el login."
+                            }, JsonRequestBehavior.AllowGet);
+                        }
+
+
+                        return Json(new
+                        {
+                            success = true,
+                            message = "Inicio de sesión exitoso.", // "Success"
+                            token = jwtAuth,
+                            usuario = usuarioOb
+                        }, JsonRequestBehavior.AllowGet);
                     }
-                    else
-                    {
-                        return Json(new { success = false, message = "User not found" });
-                    }
+
                 case SignInStatus.LockedOut:
-                    return Json(new { success = false, message = "Locked out" });
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Cuenta bloqueada." // "Locked out"
+                    }, JsonRequestBehavior.AllowGet);
+
                 case SignInStatus.RequiresVerification:
-                    return Json(new { success = false, message = "Requires verification" });
-                case SignInStatus.Failure:
-                default:
-                    return Json(new { success = false, message = "Invalid login attempt" });
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Requiere verificación." // "Requires verification"
+                    }, JsonRequestBehavior.AllowGet);
+
+                case SignInStatus.Failure: // Cubre otros fallos
+                default: // Por si acaso hay otros estados o para el caso de fallo
+                    return Json(new
+                    {
+                        success = false,
+                        message = "Intento de inicio de sesión inválido." // "Invalid login attempt"
+                    }, JsonRequestBehavior.AllowGet);
             }
         }
         [HttpPost]

@@ -1,0 +1,182 @@
+﻿@model IEnumerable<ControlRutas.Data.MediosTransporte>
+@using Microsoft.AspNet.Identity
+@using ControlRutas.DTO
+@using ControlRutas.Data
+@using ControlRutas.Helpers
+@{
+    ViewBag.Title = "Medios de transporte";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    UsuarioOB usuarioOB = null;
+    if (Request.IsAuthenticated)
+    {
+        usuarioOB = UsuarioActual.ObtenerUsuario(Request.GetOwinContext().Authentication.User.Identity.GetUserId());
+    }
+    int idEstablecimiento = usuarioOB.IdEstablecimiento;
+    ControlRutasEntities db = new ControlRutasEntities();
+}
+
+<p>
+    @Html.ActionLink("Nuevo Medio de Transporte", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Dueño
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Identificador)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Placa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Color)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estado)
+        </th>
+        <th>
+            Colegio Asignado
+        </th>
+        <th>
+            Tipo de Transporte
+        </th>
+        <th></th>
+    </tr>
+
+    @if (usuarioOB is UsuarioAdminEstablecimiento || usuarioOB is UsuarioPiloto || usuarioOB is UsuarioDueñoBuses || usuarioOB is UsuarioAdmin)
+    {
+        if (usuarioOB is UsuarioAdminEstablecimiento adminColegio)
+        {
+            foreach (var item in db.MediosTransporte.Where(mt => mt.EstablecimientosEducativos.Id == adminColegio.IdEstablecimiento).ToList())
+            {
+                <tr>
+                    <td>
+                        @item.Usuarios.PrimerNombre @item.Usuarios.PrimerApellido
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Identificador)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Placa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Color)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estado)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EstablecimientosEducativos.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TiposMediosTransporte.Nombre)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Detalle", "Details", new { id = item.Id })
+                        @Html.ActionLink("Editar", "Edit", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+        }
+        else if (usuarioOB is UsuarioPiloto piloto)
+        {
+            foreach (var item in db.MediosTransporte.Where(mt => mt.IdCodigoPiloto == piloto.Id).ToList())
+            {
+                <tr>
+                    <td>
+                        @item.Usuarios.PrimerNombre @item.Usuarios.PrimerApellido
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Identificador)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Placa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Color)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estado)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EstablecimientosEducativos.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TiposMediosTransporte.Nombre)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Detalle", "Details", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+        }
+        else if (usuarioOB is UsuarioDueñoBuses duenoBuses)
+        {
+            foreach (var item in db.MediosTransporte.Where(mt => mt.IdCodigoDueño == duenoBuses.Id).ToList())
+            {
+                <tr>
+                    <td>
+                        @item.Usuarios.PrimerNombre @item.Usuarios.PrimerApellido
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Identificador)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Placa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Color)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estado)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EstablecimientosEducativos.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TiposMediosTransporte.Nombre)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Detalle", "Details", new { id = item.Id })
+                        @Html.ActionLink("Editar", "Edit", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+        }
+        else if (usuarioOB is UsuarioAdmin admin)
+        {
+            foreach (var item in db.MediosTransporte.ToList())
+            {
+                <tr>
+                    <td>
+                        @item.Usuarios.PrimerNombre @item.Usuarios.PrimerApellido
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Identificador)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Placa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Color)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estado)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EstablecimientosEducativos.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TiposMediosTransporte.Nombre)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Detalle", "Details", new { id = item.Id })
+                        @Html.ActionLink("Editar", "Edit", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+        }
+    }
+
+</table>

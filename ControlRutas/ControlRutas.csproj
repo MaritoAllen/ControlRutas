@@ -396,6 +396,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\UsuarioActual.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -530,11 +531,6 @@
     <Content Include="Views\UsuariosEstudiantes\Details.cshtml" />
     <Content Include="Views\UsuariosEstudiantes\Edit.cshtml" />
     <Content Include="Views\UsuariosEstudiantes\Index.cshtml" />
-    <Content Include="Views\Usuarios\Create.cshtml" />
-    <Content Include="Views\Usuarios\Delete.cshtml" />
-    <Content Include="Views\Usuarios\Details.cshtml" />
-    <Content Include="Views\Usuarios\Edit.cshtml" />
-    <Content Include="Views\Usuarios\Index.cshtml" />
     <Content Include="Views\TiposMediosTransportes\Create.cshtml" />
     <Content Include="Views\TiposMediosTransportes\Delete.cshtml" />
     <Content Include="Views\TiposMediosTransportes\Details.cshtml" />
@@ -576,10 +572,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Helpers\" />
-    <Folder Include="Views\APIEventos\" />
-    <Folder Include="Views\APIMediosTransportes\" />
-    <Folder Include="Views\APIUsuarios\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

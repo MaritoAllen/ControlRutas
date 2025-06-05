@@ -1,0 +1,88 @@
+﻿@model IEnumerable<ControlRutas.Data.EstudiantesMediosTransporte>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.GUID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DireccionOrigen)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LatitudOrigen)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LongitudOrigen)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DireccionDestino)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LatitudDestino)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LongitudDestino)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Orden)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estudiantes.GUID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MediosTransporte.GUID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.GUID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DireccionOrigen)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LatitudOrigen)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LongitudOrigen)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DireccionDestino)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LatitudDestino)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LongitudDestino)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Orden)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Estudiantes.GUID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MediosTransporte.GUID)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

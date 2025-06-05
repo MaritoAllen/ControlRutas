@@ -11,6 +11,9 @@
 @if (Model != null)
 {
     <p>Detalles: @Model.Exception.Message</p>
+    <p>
+        @Model.Exception.StackTrace
+    </p>
     if (Model.Exception.InnerException != null)
     {
         <p>Inner: @Model.Exception.InnerException.Message</p>

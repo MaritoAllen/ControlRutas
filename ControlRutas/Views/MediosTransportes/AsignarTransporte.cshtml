@@ -1,0 +1,25 @@
+﻿@model ControlRutas.Data.Usuarios
+@using ControlRutas.Data
+@{
+    ViewBag.Title = "Asignar Transporte";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ControlRutasEntities db = new ControlRutasEntities();
+}
+
+<h2>Asignar Transporte</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="col">
+        <label>Transportes</label>
+        <select name="idTransporte" id="idTransporte" class="form-control">
+            <option value="">Seleccione un Transporte</option>
+            @foreach (var item in db.MediosTransporte.ToList())
+            {
+                <option value="@item.Id">@item.Placa - @item.Color</option>
+                }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Asignar</button>
+}

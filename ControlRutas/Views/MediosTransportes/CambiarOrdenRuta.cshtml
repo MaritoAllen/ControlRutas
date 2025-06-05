@@ -1,0 +1,122 @@
+﻿@model IEnumerable<ControlRutas.Data.EstudiantesMediosTransporte>
+
+@{
+    ViewBag.Title = "Cambiar Orden Ruta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col">
+        <table class="table">
+            <tr>
+                <th>
+                    Nombre Estudiante
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DireccionOrigen)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LatitudOrigen)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LongitudOrigen)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DireccionDestino)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LatitudDestino)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LongitudDestino)
+                </th>
+                <th></th>
+            </tr>
+
+        @foreach (var item in Model.OrderBy(x => x.Orden)) {
+            <tr>
+                <td>
+                    @item.Estudiantes.PrimerNombre @item.Estudiantes.SegundoNombre @item.Estudiantes.PrimerApellido @item.Estudiantes.SegundoApellido
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DireccionOrigen)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LatitudOrigen)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LongitudOrigen)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DireccionDestino)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LatitudDestino)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LongitudDestino)
+                </td>
+                <td>
+                    <select class="form-control orden" id="idOrdenRuta" data-idItem="@item.Id" name="Orden">
+                        @for (int i = 1; i <= Model.Count(); i++)
+                        {
+                            <option value="@i" @if (item.Orden == i) { <text>selected</text> }>@i</option>
+                        }
+                    </select>
+                </td>
+            </tr>
+        }
+        </table>
+        <button class="btn btn-success" id="btnGuardarOrden" type="button">Guardar Orden</button>
+        <a class="btn btn-secondary" href="@Url.Action("Details", "MediosTransportes", new { id = Model.FirstOrDefault().IdMedioTransporte })">Volver</a>
+    </div>
+</div>
+
+<script>
+    $('#btnGuardarOrden').click(function () {
+        var ordenes = [];
+        $('.orden').each(function () {
+            ordenes.push({
+                Id: $(this).data('iditem'),
+                Orden: $(this).val()
+            });
+        });
+
+        $.ajax({
+            url: '@Url.Action("CambiarOrdenRuta", "MediosTransportes")',
+            type: 'POST',
+            data: { ordenes: ordenes },
+            success: function (data) {
+                Swal.fire('Orden Actualizado', '', 'success');
+            },
+            error: function (error) {
+                Swal.fire('Error al guardar el orden', '', 'error');
+            }
+        });
+    });
+    $(document).ready(function () {
+        // Al cambiar la opción seleccionada en cualquier select
+        $('.orden').change(function () {
+            // Guardamos el select actual y su valor nuevo
+            var $currentSelect = $(this);
+            var newValue = $currentSelect.val();
+            var idItem = $currentSelect.data("iditem");
+
+            // Iteramos sobre todos los selects
+            $('.orden').each(function () {
+                var $select = $(this);
+                // Si el select actual tenía la opción seleccionada anteriormente, la cambiaremos
+                if ($select.data("iditem") !== idItem && $select.val() == newValue) {
+                    // Buscamos una opción disponible (que no esté seleccionada en ningún otro select)
+                    for (let i = 1; i <= $('.orden').length; i++) {
+                        if (!$('.orden').filter(function () { return $(this).val() == i; }).length) {
+                            $select.val(i);
+                            break;
+                        }
+                    }
+                }
+            });
+        });
+    });
+</script>

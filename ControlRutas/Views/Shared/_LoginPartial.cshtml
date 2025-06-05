@@ -1,13 +1,34 @@
 ﻿@using Microsoft.AspNet.Identity
 @using ControlRutas.DTO
 @using ControlRutas.Data
+@using ControlRutas.Helpers
+
 @{
-    
+    UsuarioOB usuarioOB = null;
+    if (Request.IsAuthenticated)
+    {
+        try
+        {
+            var userId = Request.GetOwinContext().Authentication.User.Identity.GetUserId();
+            if (!string.IsNullOrEmpty(userId))
+            {
+                usuarioOB = UsuarioActual.ObtenerUsuario(userId);
+            }
+        }
+        catch (Exception ex)
+        {
+            // Log the exception or handle it gracefully
+            <text>
+                <script>
+                    console.error('Error loading user data: @ex.Message');
+                </script>
+            </text>
+        }
+    }
 }
 
-@if (Request.IsAuthenticated)
+@if (Request.IsAuthenticated && usuarioOB != null)
 {
-    UsuarioOB usuarioOB = ControlRutas.Helpers.UsuarioActual.ObtenerUsuario();
     int idEstablecimiento = usuarioOB.IdEstablecimiento;
     ControlRutasEntities db = new ControlRutasEntities();
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))

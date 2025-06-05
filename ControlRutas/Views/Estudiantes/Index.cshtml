@@ -1,10 +1,16 @@
 ﻿@model IEnumerable<ControlRutas.Data.Estudiantes>
+@using Microsoft.AspNet.Identity
 @using ControlRutas.DTO
-
+@using ControlRutas.Data
+@using ControlRutas.Helpers
 @{
     ViewBag.Title = "Estudiantes";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    UsuarioOB usuarioOB = ControlRutas.Helpers.UsuarioActual.ObtenerUsuario();
+    UsuarioOB usuarioOB = null;
+    if (Request.IsAuthenticated)
+    {
+        usuarioOB = UsuarioActual.ObtenerUsuario(Request.GetOwinContext().Authentication.User.Identity.GetUserId());
+    }
 }
 
 <p>
@@ -35,8 +41,8 @@
                         @item.Colegio
                     </td>
                     <td>
-                        @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Detalle", "Details", new { id = item.Id })
+                        @Html.ActionLink("Editar", "Edit", new { id = item.GUID }) |
+                        @Html.ActionLink("Detalle", "Details", new { id = item.GUID })
                     </td>
                 </tr>
             }
@@ -53,8 +59,8 @@
                         @hijo.Colegio
                     </td>
                     <td>
-                        @Html.ActionLink("Editar", "Edit", new { id = hijo.Id }) |
-                        @Html.ActionLink("Detalle", "Details", new { id = hijo.Id })
+                        @Html.ActionLink("Editar", "Edit", new { id = hijo.GUID }) |
+                        @Html.ActionLink("Detalle", "Details", new { id = hijo.GUID })
                     </td>
                 </tr>
             }
@@ -71,8 +77,8 @@
                         @item.Colegio
                     </td>
                     <td>
-                        @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Detalle", "Details", new { id = item.Id })
+                        @Html.ActionLink("Editar", "Edit", new { id = item.GUID }) |
+                        @Html.ActionLink("Detalle", "Details", new { id = item.GUID })
                     </td>
                 </tr>
             }

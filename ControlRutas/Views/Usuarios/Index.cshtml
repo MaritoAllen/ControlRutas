@@ -1,0 +1,105 @@
+﻿@model IEnumerable<ControlRutas.Data.Usuarios>
+@using Microsoft.AspNet.Identity
+@using ControlRutas.DTO
+@using ControlRutas.Data
+@using ControlRutas.Helpers
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    UsuarioOB usuarioOB = null;
+    if (Request.IsAuthenticated)
+    {
+        usuarioOB = UsuarioActual.ObtenerUsuario(Request.GetOwinContext().Authentication.User.Identity.GetUserId());
+    }
+    int idEstablecimiento = usuarioOB.IdEstablecimiento;
+    ControlRutasEntities db = new ControlRutasEntities();
+}
+
+<h2>Usuarios</h2>
+
+<p>
+    @Html.ActionLink("Nuevo Usuario", "NuevoUsuario", "Account")
+</p>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                Telefono
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
+                Tipo Usuario
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if(usuarioOB is UsuarioAdminEstablecimiento || usuarioOB is UsuarioAdmin)
+        {
+            if(usuarioOB is UsuarioAdminEstablecimiento adminColegio)
+            {
+                foreach (var item in db.UsuariosEstablecimientos.Where(u => u.IdEstablecimientoEducativo == adminColegio.IdEstablecimiento).ToList())
+                {
+                    <tr>
+                        <td>
+                            @item.Usuarios.PrimerNombre @item.Usuarios.PrimerApellido
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Usuarios.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Usuarios.NumeroTelefono)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Usuarios.Estado)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Usuarios.TiposUsuarios.Nombre)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Editar", "Edit", new { id = item.Usuarios.Id }) |
+                            @Html.ActionLink("Detalles", "Details", new { id = item.Usuarios.Id })
+                        </td>
+                    </tr>
+                }
+            }
+            else if(usuarioOB is UsuarioAdmin)
+            {
+                foreach(var item in db.Usuarios.ToList())
+                {
+                    <tr>
+                        <td>
+                            @item.PrimerNombre @item.PrimerApellido
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NumeroTelefono)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Estado)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TiposUsuarios.Nombre)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Detalles", "Details", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+
+</table>

@@ -1,0 +1,123 @@
+﻿@model ControlRutas.Data.RutasMediosTransporte
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>RutasMediosTransporte</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.GUID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GUID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Grado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Grado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DireccionOrigen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DireccionOrigen)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LatitudOrigen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LatitudOrigen)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LongitudOrigen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LongitudOrigen)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DireccionDestino)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DireccionDestino)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LatitudDestino)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LatitudDestino)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LongitudDestino)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LongitudDestino)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Orden)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Orden)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HoraSalida)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HoraSalida)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HoraLlegada)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HoraLlegada)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EstudiantesMediosTransporte.GUID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EstudiantesMediosTransporte.GUID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,181 @@
+﻿@model ControlRutas.Data.MediosTransporte
+
+@{
+    ViewBag.Title = "Detalle - " + Model.Placa;
+}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6Lk2ny3mgL7SKWQvWkxcEkk8ExeGVC50&callback=CrearMapa" async defer></script>
+<div class="col">
+    <div class="row">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Datos Del Medio De Transporte</h4>
+                </div>
+                <div class="card-body">
+
+                    <dl class="dl-horizontal">
+                        <dt>
+                            <label for="PrimerNombre" class="col-form-label">Identificador de Bus</label>
+                        </dt>
+
+                        <dd>
+                            <p>@Model.Identificador - @Model.Placa - @Model.Color</p>
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Estado)
+                        </dt>
+
+                        <dd>
+                            @(Model.Estado ? "Activo" : "Inactivo")
+                        </dd>
+
+                        <dt>
+                            <label for="NombreEstablecimiento" class="col-form-label">Establecimiento Educativo</label>
+                        </dt>
+
+                        <dd>
+                            <p>@Model.EstablecimientosEducativos.Nombre</p>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Estudiantes Asignados</h4>
+                        </div>
+                        <div class="card-body">
+                            @foreach (ControlRutas.Data.EstudiantesMediosTransporte usuario in Model.EstudiantesMediosTransporte)
+                            {
+                                <div class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h5>@usuario.Estudiantes.PrimerNombre @usuario.Estudiantes.SegundoNombre @usuario.Estudiantes.PrimerApellido @usuario.Estudiantes.SegundoApellido</h5>
+                                            <a class="btn btn-info" href="@Url.Action("Details", "Estudiantes", new { id = usuario.Estudiantes.Id })">Ver Estudiante</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">
+                                Ruta
+                            </h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row" style="height:25rem;">
+                                <div class="col-5">
+                                    <div class="row">
+                                        <div class="col">
+                                            <table class="table" style="height: 20rem;">
+                                                @foreach (ControlRutas.Data.EstudiantesMediosTransporte ruta in Model.EstudiantesMediosTransporte.OrderBy(x => x.Orden))
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <a href="#" class="list-group-item list-group-item-action @if (ruta.Orden == 1) { <text> active </text> }" aria-current="true" onclick="zoomToLocation(@ruta.LatitudDestino, @ruta.LongitudDestino)">
+                                                                <div class="d-flex w-100 justify-content-between">
+                                                                    <h5 class="mb-1">@ruta.Estudiantes.PrimerNombre @ruta.Estudiantes.SegundoNombre @ruta.Estudiantes.PrimerApellido @ruta.Estudiantes.SegundoApellido</h5>
+                                                                </div>
+                                                                <p class="mb-1">@ruta.DireccionDestino</p>
+                                                                <small>@ruta.DireccionOrigen</small>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <a class="btn btn-warning" href="@Url.Action("CambiarOrdenRuta", "MediosTransportes", new { id = Model.Id })">Editar Orden De Ruta</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-7">
+                                    <div id="map" style="height:100%;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Regresar", "Index")
+</p>
+
+<script>
+    var map;
+    async function CrearMapa() {
+        const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+        const mapOptions = {
+            center: new google.maps.LatLng(14.6133576, -90.5145925),
+            zoom: 9,
+            mapId: '4504f8b37365c3d0',
+        };
+        map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+        
+
+        var listaMarcadores = [];
+
+        @foreach (ControlRutas.Data.EstudiantesMediosTransporte ruta in Model.EstudiantesMediosTransporte.OrderBy(x => x.Orden))
+        {
+            <text>
+
+                listaMarcadores.push({ lat: @ruta.LatitudDestino, lng: @ruta.LongitudDestino, nombre: '@ruta.Estudiantes.PrimerNombre @ruta.Estudiantes.SegundoNombre @ruta.Estudiantes.PrimerApellido @ruta.Estudiantes.SegundoApellido', orden: @ruta.Orden });
+
+            </text>
+        }
+        
+        console.log('Lista',listaMarcadores);
+
+        listaMarcadores.forEach(function (item) {
+
+            var divMark = document.createElement('div');
+            divMark.className = 'price-tag';
+            divMark.style.backgroundColor = 'red';
+            divMark.style.borderRadius = '8px';
+            divMark.style.color = 'white';
+            divMark.style.fontSize = '14px';
+            divMark.style.padding = '10px 15px';
+            divMark.style.position = 'relative';
+            
+            console.log(item);
+            divMark.textContent = item.orden;
+            const AdvancedMarkerElement = new google.maps.marker.AdvancedMarkerElement({
+                position: { lat: item.lat, lng: item.lng },
+                map: map,
+                content: divMark,
+                title: item.nombre,
+            });
+
+            divMark.addEventListener('click', function() {
+                map.setZoom(15);
+                map.setCenter({ lat: item.lat, lng: item.lng });
+            });
+
+            console.log(AdvancedMarkerElement);
+        });
+    }
+
+    function zoomToLocation(lat, lng) {
+        map.setZoom(15);
+        map.setCenter({ lat: lat, lng: lng });
+    }
+
+</script>

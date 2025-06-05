@@ -1,0 +1,104 @@
+﻿@using ControlRutas.Data;
+@model ControlRutas.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Nuevo Usuario";
+    ControlRutasEntities db = new ControlRutasEntities();
+    ControlRutas.Helpers.UsuarioActual usuarioActual = new ControlRutas.Helpers.UsuarioActual();
+}
+
+<main aria-labelledby="title">
+    @using (Html.BeginForm("NuevoUsuario", "Account", FormMethod.Post, new { role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <h4>Cree un nuevo usuario.</h4>
+        <hr />
+        <div class="row row-cols-2">
+            <div class="col">
+                <div class="row">
+                    <label class="col-md-4 col-form-label" for="PrimerNombre">Primer Nombre</label>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.PrimerNombre, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-md-4 col-form-label" for="SegundoNombre">Segundo Nombre</label>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.SegundoNombre, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-md-4 col-form-label" for="PrimerApellido">Primer Apellido</label>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.PrimerApellido, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-md-4 col-form-label" for="SegundoApellido">Segundo Apellido</label>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.SegundoApellido, new { @class = "form-control" })
+                    </div>
+                </div>
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                <div class="row">
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="row">
+                    @Html.LabelFor(m => m.Password, new { @class = "col-md-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row">
+                    @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row">
+                    @Html.LabelFor(m => m.NumeroTelefono, new { @class = "col-md-4 col-form-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.NumeroTelefono, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row">
+                    @Html.LabelFor(m => m.id_tipo_usuario, new { @class = "col-md-4 col-form-label" })
+                    <div class="col-md-8">
+                        <select name="id_tipo_usuario" id="id_tipo_usuario" class="form-control">
+                            <option value="">Seleccione un tipo de usuario</option>
+                            @foreach (var item in db.TiposUsuarios)
+                            {
+                                <option value="@item.Id">@item.Nombre</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    @Html.LabelFor(m => m.idEstablecimiento, new { @class = "col-md-4 col-form-label" })
+                    <div class="col-md-8">
+                        <select name="idEstablecimiento" id="idEstablecimiento" class="form-control">
+                            <option value="">Seleccione un establecimiento educativo</option>
+                            @foreach (var item in db.EstablecimientosEducativos)
+                            {
+                                <option value="@item.Id">@item.Nombre</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="offset-md-2 col-md-10">
+                        <input type="submit" value="Crear" class="btn btn-outline-dark" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</main>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
