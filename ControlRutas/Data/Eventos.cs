@@ -20,7 +20,7 @@ namespace ControlRutas.Data
         public System.DateTime Fecha { get; set; }
         public int IdEstudiante { get; set; }
     
-        public virtual TiposEventos TiposEventos { get; set; }
         public virtual Estudiantes Estudiantes { get; set; }
+        public virtual TiposEventos TiposEventos { get; set; }
     }
 }

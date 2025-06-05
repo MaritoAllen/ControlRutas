@@ -708,12 +708,30 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="ControlRutasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="ControlRutasEntities" annotation:LazyLoadingEnabled="true">
+      <Schema Namespace="ControlRutasModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntityContainer Name="ControlRutasEntities" annotation:LazyLoadingEnabled="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
           <EntitySet Name="AspNetRoles" EntityType="ControlRutasModel.AspNetRoles" />
           <EntitySet Name="AspNetUserClaims" EntityType="ControlRutasModel.AspNetUserClaims" />
           <EntitySet Name="AspNetUserLogins" EntityType="ControlRutasModel.AspNetUserLogins" />
           <EntitySet Name="AspNetUsers" EntityType="ControlRutasModel.AspNetUsers" />
+          <EntitySet Name="EstablecimientosEducativos" EntityType="ControlRutasModel.EstablecimientosEducativos" />
+          <EntitySet Name="Estudiantes" EntityType="ControlRutasModel.Estudiantes" />
+          <EntitySet Name="EstudiantesMediosTransporte" EntityType="ControlRutasModel.EstudiantesMediosTransporte" />
+          <EntitySet Name="Eventos" EntityType="ControlRutasModel.Eventos" />
+          <EntitySet Name="MediosTransporte" EntityType="ControlRutasModel.MediosTransporte" />
+          <EntitySet Name="NoUsoRutasMediosTransporte" EntityType="ControlRutasModel.NoUsoRutasMediosTransporte" />
+          <EntitySet Name="Perfiles" EntityType="ControlRutasModel.Perfiles" />
+          <EntitySet Name="PerfilesPermisos" EntityType="ControlRutasModel.PerfilesPermisos" />
+          <EntitySet Name="Permisos" EntityType="ControlRutasModel.Permisos" />
+          <EntitySet Name="RutasMediosTransporte" EntityType="ControlRutasModel.RutasMediosTransporte" />
+          <EntitySet Name="TiposEventos" EntityType="ControlRutasModel.TiposEventos" />
+          <EntitySet Name="TiposMediosTransporte" EntityType="ControlRutasModel.TiposMediosTransporte" />
+          <EntitySet Name="TiposUsuarios" EntityType="ControlRutasModel.TiposUsuarios" />
+          <EntitySet Name="Usuarios" EntityType="ControlRutasModel.Usuarios" />
+          <EntitySet Name="UsuariosEstablecimientos" EntityType="ControlRutasModel.UsuariosEstablecimientos" />
+          <EntitySet Name="UsuariosEstudiantes" EntityType="ControlRutasModel.UsuariosEstudiantes" />
+          <EntitySet Name="UsuariosMediosTransporte" EntityType="ControlRutasModel.UsuariosMediosTransporte" />
+          <EntitySet Name="UsuariosPermisos" EntityType="ControlRutasModel.UsuariosPermisos" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="ControlRutasModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -722,20 +740,49 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
           </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="ControlRutasModel.AspNetUserRoles">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          <AssociationSet Name="FK__MediosTra__idCod__6B24EA82" Association="ControlRutasModel.FK__MediosTra__idCod__6B24EA82">
+            <End Role="EstablecimientosEducativos" EntitySet="EstablecimientosEducativos" />
+            <End Role="MediosTransporte" EntitySet="MediosTransporte" />
           </AssociationSet>
-          <EntitySet Name="Eventos" EntityType="ControlRutasModel.Eventos" />
-          <EntitySet Name="MediosTransporte" EntityType="ControlRutasModel.MediosTransporte" />
-          <EntitySet Name="TiposEventos" EntityType="ControlRutasModel.TiposEventos" />
-          <EntitySet Name="TiposMediosTransporte" EntityType="ControlRutasModel.TiposMediosTransporte" />
-          <EntitySet Name="TiposUsuarios" EntityType="ControlRutasModel.TiposUsuarios" />
-          <EntitySet Name="UsuariosEstudiantes" EntityType="ControlRutasModel.UsuariosEstudiantes" />
-          <EntitySet Name="UsuariosMediosTransporte" EntityType="ControlRutasModel.UsuariosMediosTransporte" />
+          <AssociationSet Name="FK_Estudiantes_EstablecimientosEducativos" Association="ControlRutasModel.FK_Estudiantes_EstablecimientosEducativos">
+            <End Role="EstablecimientosEducativos" EntitySet="EstablecimientosEducativos" />
+            <End Role="Estudiantes" EntitySet="Estudiantes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsuariosEstablecimientos_EstablecimientosEducativos" Association="ControlRutasModel.FK_UsuariosEstablecimientos_EstablecimientosEducativos">
+            <End Role="EstablecimientosEducativos" EntitySet="EstablecimientosEducativos" />
+            <End Role="UsuariosEstablecimientos" EntitySet="UsuariosEstablecimientos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Estudiant__idCod__72C60C4A" Association="ControlRutasModel.FK__Estudiant__idCod__72C60C4A">
+            <End Role="Estudiantes" EntitySet="Estudiantes" />
+            <End Role="EstudiantesMediosTransporte" EntitySet="EstudiantesMediosTransporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Eventos__idEstud__7F2BE32F" Association="ControlRutasModel.FK__Eventos__idEstud__7F2BE32F">
+            <End Role="Estudiantes" EntitySet="Estudiantes" />
+            <End Role="Eventos" EntitySet="Eventos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuariosE__idEst__6383C8BA" Association="ControlRutasModel.FK__UsuariosE__idEst__6383C8BA">
+            <End Role="Estudiantes" EntitySet="Estudiantes" />
+            <End Role="UsuariosEstudiantes" EntitySet="UsuariosEstudiantes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Estudiant__idCod__73BA3083" Association="ControlRutasModel.FK__Estudiant__idCod__73BA3083">
+            <End Role="MediosTransporte" EntitySet="MediosTransporte" />
+            <End Role="EstudiantesMediosTransporte" EntitySet="EstudiantesMediosTransporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NoUsoRuta__idEst__797309D9" Association="ControlRutasModel.FK__NoUsoRuta__idEst__797309D9">
+            <End Role="EstudiantesMediosTransporte" EntitySet="EstudiantesMediosTransporte" />
+            <End Role="NoUsoRutasMediosTransporte" EntitySet="NoUsoRutasMediosTransporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RutasMedi__idEst__76969D2E" Association="ControlRutasModel.FK__RutasMedi__idEst__76969D2E">
+            <End Role="EstudiantesMediosTransporte" EntitySet="EstudiantesMediosTransporte" />
+            <End Role="RutasMediosTransporte" EntitySet="RutasMediosTransporte" />
+          </AssociationSet>
           <AssociationSet Name="FK__Eventos__idTipoE__7E37BEF6" Association="ControlRutasModel.FK__Eventos__idTipoE__7E37BEF6">
             <End Role="TiposEventos" EntitySet="TiposEventos" />
             <End Role="Eventos" EntitySet="Eventos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MediosTra__idCod__693CA210" Association="ControlRutasModel.FK__MediosTra__idCod__693CA210">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="MediosTransporte" EntitySet="MediosTransporte" />
           </AssociationSet>
           <AssociationSet Name="FK__MediosTra__idTip__6C190EBB" Association="ControlRutasModel.FK__MediosTra__idTip__6C190EBB">
             <End Role="TiposMediosTransporte" EntitySet="TiposMediosTransporte" />
@@ -745,11 +792,17 @@
             <End Role="MediosTransporte" EntitySet="MediosTransporte" />
             <End Role="UsuariosMediosTransporte" EntitySet="UsuariosMediosTransporte" />
           </AssociationSet>
-          <EntitySet Name="UsuariosEstablecimientos" EntityType="ControlRutasModel.UsuariosEstablecimientos" />
-          <EntitySet Name="Usuarios" EntityType="ControlRutasModel.Usuarios" />
-          <AssociationSet Name="FK__MediosTra__idCod__693CA210" Association="ControlRutasModel.FK__MediosTra__idCod__693CA210">
-            <End Role="Usuarios" EntitySet="Usuarios" />
-            <End Role="MediosTransporte" EntitySet="MediosTransporte" />
+          <AssociationSet Name="FK_PerfilesPermisos_Perfiles" Association="ControlRutasModel.FK_PerfilesPermisos_Perfiles">
+            <End Role="Perfiles" EntitySet="Perfiles" />
+            <End Role="PerfilesPermisos" EntitySet="PerfilesPermisos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PerfilesPermisos_Permisos" Association="ControlRutasModel.FK_PerfilesPermisos_Permisos">
+            <End Role="Permisos" EntitySet="Permisos" />
+            <End Role="PerfilesPermisos" EntitySet="PerfilesPermisos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsuariosPermisos_Permisos" Association="ControlRutasModel.FK_UsuariosPermisos_Permisos">
+            <End Role="Permisos" EntitySet="Permisos" />
+            <End Role="UsuariosPermisos" EntitySet="UsuariosPermisos" />
           </AssociationSet>
           <AssociationSet Name="FK_Usuarios_TiposUsuarios" Association="ControlRutasModel.FK_Usuarios_TiposUsuarios">
             <End Role="TiposUsuarios" EntitySet="TiposUsuarios" />
@@ -767,68 +820,15 @@
             <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="UsuariosEstablecimientos" EntitySet="UsuariosEstablecimientos" />
           </AssociationSet>
-          <EntitySet Name="RutasMediosTransporte" EntityType="ControlRutasModel.RutasMediosTransporte" />
-          <EntitySet Name="NoUsoRutasMediosTransporte" EntityType="ControlRutasModel.NoUsoRutasMediosTransporte" />
-          <EntitySet Name="Perfiles" EntityType="ControlRutasModel.Perfiles" />
-          <EntitySet Name="PerfilesPermisos" EntityType="ControlRutasModel.PerfilesPermisos" />
-          <EntitySet Name="Permisos" EntityType="ControlRutasModel.Permisos" />
-          <EntitySet Name="UsuariosPermisos" EntityType="ControlRutasModel.UsuariosPermisos" />
-          <AssociationSet Name="FK_PerfilesPermisos_Perfiles" Association="ControlRutasModel.FK_PerfilesPermisos_Perfiles">
-            <End Role="Perfiles" EntitySet="Perfiles" />
-            <End Role="PerfilesPermisos" EntitySet="PerfilesPermisos" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PerfilesPermisos_Permisos" Association="ControlRutasModel.FK_PerfilesPermisos_Permisos">
-            <End Role="Permisos" EntitySet="Permisos" />
-            <End Role="PerfilesPermisos" EntitySet="PerfilesPermisos" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UsuariosPermisos_Permisos" Association="ControlRutasModel.FK_UsuariosPermisos_Permisos">
-            <End Role="Permisos" EntitySet="Permisos" />
-            <End Role="UsuariosPermisos" EntitySet="UsuariosPermisos" />
-          </AssociationSet>
           <AssociationSet Name="FK_UsuariosPermisos_Usuarios" Association="ControlRutasModel.FK_UsuariosPermisos_Usuarios">
             <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="UsuariosPermisos" EntitySet="UsuariosPermisos" />
           </AssociationSet>
-          <EntitySet Name="EstudiantesMediosTransporte" EntityType="ControlRutasModel.EstudiantesMediosTransporte" />
-          <AssociationSet Name="FK__Estudiant__idCod__73BA3083" Association="ControlRutasModel.FK__Estudiant__idCod__73BA3083">
-            <End Role="MediosTransporte" EntitySet="MediosTransporte" />
-            <End Role="EstudiantesMediosTransporte" EntitySet="EstudiantesMediosTransporte" />
+          <AssociationSet Name="AspNetUserRoles" Association="ControlRutasModel.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <AssociationSet Name="FK__NoUsoRuta__idEst__797309D9" Association="ControlRutasModel.FK__NoUsoRuta__idEst__797309D9">
-            <End Role="EstudiantesMediosTransporte" EntitySet="EstudiantesMediosTransporte" />
-            <End Role="NoUsoRutasMediosTransporte" EntitySet="NoUsoRutasMediosTransporte" />
-          </AssociationSet>
-          <AssociationSet Name="FK__RutasMedi__idEst__76969D2E" Association="ControlRutasModel.FK__RutasMedi__idEst__76969D2E">
-            <End Role="EstudiantesMediosTransporte" EntitySet="EstudiantesMediosTransporte" />
-            <End Role="RutasMediosTransporte" EntitySet="RutasMediosTransporte" />
-          </AssociationSet>
-          <EntitySet Name="Estudiantes" EntityType="ControlRutasModel.Estudiantes" />
-          <AssociationSet Name="FK__Estudiant__idCod__72C60C4A" Association="ControlRutasModel.FK__Estudiant__idCod__72C60C4A">
-            <End Role="Estudiantes" EntitySet="Estudiantes" />
-            <End Role="EstudiantesMediosTransporte" EntitySet="EstudiantesMediosTransporte" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Eventos__idEstud__7F2BE32F" Association="ControlRutasModel.FK__Eventos__idEstud__7F2BE32F">
-            <End Role="Estudiantes" EntitySet="Estudiantes" />
-            <End Role="Eventos" EntitySet="Eventos" />
-          </AssociationSet>
-          <AssociationSet Name="FK__UsuariosE__idEst__6383C8BA" Association="ControlRutasModel.FK__UsuariosE__idEst__6383C8BA">
-            <End Role="Estudiantes" EntitySet="Estudiantes" />
-            <End Role="UsuariosEstudiantes" EntitySet="UsuariosEstudiantes" />
-          </AssociationSet>
-          <EntitySet Name="EstablecimientosEducativos" EntityType="ControlRutasModel.EstablecimientosEducativos" />
-          <AssociationSet Name="FK__MediosTra__idCod__6B24EA82" Association="ControlRutasModel.FK__MediosTra__idCod__6B24EA82">
-            <End Role="EstablecimientosEducativos" EntitySet="EstablecimientosEducativos" />
-            <End Role="MediosTransporte" EntitySet="MediosTransporte" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Estudiantes_EstablecimientosEducativos" Association="ControlRutasModel.FK_Estudiantes_EstablecimientosEducativos">
-            <End Role="EstablecimientosEducativos" EntitySet="EstablecimientosEducativos" />
-            <End Role="Estudiantes" EntitySet="Estudiantes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UsuariosEstablecimientos_EstablecimientosEducativos" Association="ControlRutasModel.FK_UsuariosEstablecimientos_EstablecimientosEducativos">
-            <End Role="EstablecimientosEducativos" EntitySet="EstablecimientosEducativos" />
-            <End Role="UsuariosEstablecimientos" EntitySet="UsuariosEstablecimientos" />
-          </AssociationSet>
-          </EntityContainer>
+        </EntityContainer>
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -878,38 +878,70 @@
           <NavigationProperty Name="AspNetUserLogins" Relationship="ControlRutasModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="AspNetRoles" Relationship="ControlRutasModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
         </EntityType>
-        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-          <End Type="ControlRutasModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="ControlRutasModel.AspNetUserClaims" Role="AspNetUserClaims" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserClaims">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-          <End Type="ControlRutasModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="ControlRutasModel.AspNetUserLogins" Role="AspNetUserLogins" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserLogins">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="AspNetUserRoles">
-          <End Type="ControlRutasModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
-          <End Type="ControlRutasModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
-        </Association>
+        <EntityType Name="EstablecimientosEducativos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GUID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Latitud" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Longitud" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="Foto" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MediosTransporte" Relationship="ControlRutasModel.FK__MediosTra__idCod__6B24EA82" FromRole="EstablecimientosEducativos" ToRole="MediosTransporte" />
+          <NavigationProperty Name="Estudiantes" Relationship="ControlRutasModel.FK_Estudiantes_EstablecimientosEducativos" FromRole="EstablecimientosEducativos" ToRole="Estudiantes" />
+          <NavigationProperty Name="UsuariosEstablecimientos" Relationship="ControlRutasModel.FK_UsuariosEstablecimientos_EstablecimientosEducativos" FromRole="EstablecimientosEducativos" ToRole="UsuariosEstablecimientos" />
+        </EntityType>
+        <EntityType Name="Estudiantes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GUID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="PrimerNombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SegundoNombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PrimerApellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SegundoApellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdEstablecimientoEducativo" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="Grado" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Seccion" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Identificacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EstablecimientosEducativos" Relationship="ControlRutasModel.FK_Estudiantes_EstablecimientosEducativos" FromRole="Estudiantes" ToRole="EstablecimientosEducativos" />
+          <NavigationProperty Name="EstudiantesMediosTransporte" Relationship="ControlRutasModel.FK__Estudiant__idCod__72C60C4A" FromRole="Estudiantes" ToRole="EstudiantesMediosTransporte" />
+          <NavigationProperty Name="Eventos" Relationship="ControlRutasModel.FK__Eventos__idEstud__7F2BE32F" FromRole="Estudiantes" ToRole="Eventos" />
+          <NavigationProperty Name="UsuariosEstudiantes" Relationship="ControlRutasModel.FK__UsuariosE__idEst__6383C8BA" FromRole="Estudiantes" ToRole="UsuariosEstudiantes" />
+        </EntityType>
+        <EntityType Name="EstudiantesMediosTransporte">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GUID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="IdEstudiante" Type="Int32" Nullable="false" />
+          <Property Name="IdMedioTransporte" Type="Int32" Nullable="false" />
+          <Property Name="DireccionOrigen" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LatitudOrigen" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LongitudOrigen" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DireccionDestino" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LatitudDestino" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LongitudDestino" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Orden" Type="Int32" Nullable="false" />
+          <Property Name="Lunes" Type="Boolean" Nullable="false" />
+          <Property Name="Martes" Type="Boolean" Nullable="false" />
+          <Property Name="Miercoles" Type="Boolean" Nullable="false" />
+          <Property Name="Jueves" Type="Boolean" Nullable="false" />
+          <Property Name="Viernes" Type="Boolean" Nullable="false" />
+          <Property Name="Sabado" Type="Boolean" Nullable="false" />
+          <Property Name="Domingo" Type="Boolean" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Estudiantes" Relationship="ControlRutasModel.FK__Estudiant__idCod__72C60C4A" FromRole="EstudiantesMediosTransporte" ToRole="Estudiantes" />
+          <NavigationProperty Name="MediosTransporte" Relationship="ControlRutasModel.FK__Estudiant__idCod__73BA3083" FromRole="EstudiantesMediosTransporte" ToRole="MediosTransporte" />
+          <NavigationProperty Name="NoUsoRutasMediosTransporte" Relationship="ControlRutasModel.FK__NoUsoRuta__idEst__797309D9" FromRole="EstudiantesMediosTransporte" ToRole="NoUsoRutasMediosTransporte" />
+          <NavigationProperty Name="RutasMediosTransporte" Relationship="ControlRutasModel.FK__RutasMedi__idEst__76969D2E" FromRole="EstudiantesMediosTransporte" ToRole="RutasMediosTransporte" />
+        </EntityType>
         <EntityType Name="Eventos">
           <Key>
             <PropertyRef Name="Id" />
@@ -919,8 +951,8 @@
           <Property Name="IdTipoEvento" Type="Int32" Nullable="false" />
           <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IdEstudiante" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="TiposEventos" Relationship="ControlRutasModel.FK__Eventos__idTipoE__7E37BEF6" FromRole="Eventos" ToRole="TiposEventos" />
           <NavigationProperty Name="Estudiantes" Relationship="ControlRutasModel.FK__Eventos__idEstud__7F2BE32F" FromRole="Eventos" ToRole="Estudiantes" />
+          <NavigationProperty Name="TiposEventos" Relationship="ControlRutasModel.FK__Eventos__idTipoE__7E37BEF6" FromRole="Eventos" ToRole="TiposEventos" />
         </EntityType>
         <EntityType Name="MediosTransporte">
           <Key>
@@ -936,11 +968,74 @@
           <Property Name="Placa" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Color" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="EstablecimientosEducativos" Relationship="ControlRutasModel.FK__MediosTra__idCod__6B24EA82" FromRole="MediosTransporte" ToRole="EstablecimientosEducativos" />
+          <NavigationProperty Name="EstudiantesMediosTransporte" Relationship="ControlRutasModel.FK__Estudiant__idCod__73BA3083" FromRole="MediosTransporte" ToRole="EstudiantesMediosTransporte" />
+          <NavigationProperty Name="Usuarios" Relationship="ControlRutasModel.FK__MediosTra__idCod__693CA210" FromRole="MediosTransporte" ToRole="Usuarios" />
           <NavigationProperty Name="TiposMediosTransporte" Relationship="ControlRutasModel.FK__MediosTra__idTip__6C190EBB" FromRole="MediosTransporte" ToRole="TiposMediosTransporte" />
           <NavigationProperty Name="UsuariosMediosTransporte" Relationship="ControlRutasModel.FK__UsuariosM__idCod__6FE99F9F" FromRole="MediosTransporte" ToRole="UsuariosMediosTransporte" />
-          <NavigationProperty Name="Usuarios" Relationship="ControlRutasModel.FK__MediosTra__idCod__693CA210" FromRole="MediosTransporte" ToRole="Usuarios" />
-          <NavigationProperty Name="EstudiantesMediosTransporte" Relationship="ControlRutasModel.FK__Estudiant__idCod__73BA3083" FromRole="MediosTransporte" ToRole="EstudiantesMediosTransporte" />
-          <NavigationProperty Name="EstablecimientosEducativos" Relationship="ControlRutasModel.FK__MediosTra__idCod__6B24EA82" FromRole="MediosTransporte" ToRole="EstablecimientosEducativos" />
+        </EntityType>
+        <EntityType Name="NoUsoRutasMediosTransporte">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GUID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="IdEstudianteMedioTransporte" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Motivo" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EstudiantesMediosTransporte" Relationship="ControlRutasModel.FK__NoUsoRuta__idEst__797309D9" FromRole="NoUsoRutasMediosTransporte" ToRole="EstudiantesMediosTransporte" />
+        </EntityType>
+        <EntityType Name="Perfiles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GUID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PerfilesPermisos" Relationship="ControlRutasModel.FK_PerfilesPermisos_Perfiles" FromRole="Perfiles" ToRole="PerfilesPermisos" />
+        </EntityType>
+        <EntityType Name="PerfilesPermisos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GUID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdPerfil" Type="Int32" Nullable="false" />
+          <Property Name="IdPermiso" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Perfiles" Relationship="ControlRutasModel.FK_PerfilesPermisos_Perfiles" FromRole="PerfilesPermisos" ToRole="Perfiles" />
+          <NavigationProperty Name="Permisos" Relationship="ControlRutasModel.FK_PerfilesPermisos_Permisos" FromRole="PerfilesPermisos" ToRole="Permisos" />
+        </EntityType>
+        <EntityType Name="Permisos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GUID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Acceso" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PerfilesPermisos" Relationship="ControlRutasModel.FK_PerfilesPermisos_Permisos" FromRole="Permisos" ToRole="PerfilesPermisos" />
+          <NavigationProperty Name="UsuariosPermisos" Relationship="ControlRutasModel.FK_UsuariosPermisos_Permisos" FromRole="Permisos" ToRole="UsuariosPermisos" />
+        </EntityType>
+        <EntityType Name="RutasMediosTransporte">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GUID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="IdEstudianteMedioTransporte" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Grado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DireccionOrigen" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LatitudOrigen" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LongitudOrigen" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DireccionDestino" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LatitudDestino" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LongitudDestino" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Orden" Type="Int32" Nullable="false" />
+          <Property Name="HoraSalida" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="HoraLlegada" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EstudiantesMediosTransporte" Relationship="ControlRutasModel.FK__RutasMedi__idEst__76969D2E" FromRole="RutasMediosTransporte" ToRole="EstudiantesMediosTransporte" />
         </EntityType>
         <EntityType Name="TiposEventos">
           <Key>
@@ -974,6 +1069,40 @@
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Usuarios" Relationship="ControlRutasModel.FK_Usuarios_TiposUsuarios" FromRole="TiposUsuarios" ToRole="Usuarios" />
         </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GUID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="PrimerNombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SegundoNombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PrimerApellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SegundoApellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NumeroTelefono" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipoUsuario" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="Int32" Nullable="false" />
+          <Property Name="MessageToken" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MediosTransporte" Relationship="ControlRutasModel.FK__MediosTra__idCod__693CA210" FromRole="Usuarios" ToRole="MediosTransporte" />
+          <NavigationProperty Name="TiposUsuarios" Relationship="ControlRutasModel.FK_Usuarios_TiposUsuarios" FromRole="Usuarios" ToRole="TiposUsuarios" />
+          <NavigationProperty Name="UsuariosEstudiantes" Relationship="ControlRutasModel.FK__UsuariosE__idUsu__628FA481" FromRole="Usuarios" ToRole="UsuariosEstudiantes" />
+          <NavigationProperty Name="UsuariosMediosTransporte" Relationship="ControlRutasModel.FK__UsuariosM__idCod__6EF57B66" FromRole="Usuarios" ToRole="UsuariosMediosTransporte" />
+          <NavigationProperty Name="UsuariosEstablecimientos" Relationship="ControlRutasModel.FK_UsuariosEstablecimientos_Usuarios" FromRole="Usuarios" ToRole="UsuariosEstablecimientos" />
+          <NavigationProperty Name="UsuariosPermisos" Relationship="ControlRutasModel.FK_UsuariosPermisos_Usuarios" FromRole="Usuarios" ToRole="UsuariosPermisos" />
+        </EntityType>
+        <EntityType Name="UsuariosEstablecimientos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GUID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+          <Property Name="IdEstablecimientoEducativo" Type="Int32" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="EstablecimientosEducativos" Relationship="ControlRutasModel.FK_UsuariosEstablecimientos_EstablecimientosEducativos" FromRole="UsuariosEstablecimientos" ToRole="EstablecimientosEducativos" />
+          <NavigationProperty Name="Usuarios" Relationship="ControlRutasModel.FK_UsuariosEstablecimientos_Usuarios" FromRole="UsuariosEstablecimientos" ToRole="Usuarios" />
+        </EntityType>
         <EntityType Name="UsuariosEstudiantes">
           <Key>
             <PropertyRef Name="Id" />
@@ -982,8 +1111,8 @@
           <Property Name="GUID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="IdUsuario" Type="Int32" Nullable="false" />
           <Property Name="IdEstudiante" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Usuarios" Relationship="ControlRutasModel.FK__UsuariosE__idUsu__628FA481" FromRole="UsuariosEstudiantes" ToRole="Usuarios" />
           <NavigationProperty Name="Estudiantes" Relationship="ControlRutasModel.FK__UsuariosE__idEst__6383C8BA" FromRole="UsuariosEstudiantes" ToRole="Estudiantes" />
+          <NavigationProperty Name="Usuarios" Relationship="ControlRutasModel.FK__UsuariosE__idUsu__628FA481" FromRole="UsuariosEstudiantes" ToRole="Usuarios" />
         </EntityType>
         <EntityType Name="UsuariosMediosTransporte">
           <Key>
@@ -996,6 +1125,153 @@
           <NavigationProperty Name="MediosTransporte" Relationship="ControlRutasModel.FK__UsuariosM__idCod__6FE99F9F" FromRole="UsuariosMediosTransporte" ToRole="MediosTransporte" />
           <NavigationProperty Name="Usuarios" Relationship="ControlRutasModel.FK__UsuariosM__idCod__6EF57B66" FromRole="UsuariosMediosTransporte" ToRole="Usuarios" />
         </EntityType>
+        <EntityType Name="UsuariosPermisos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GUID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+          <Property Name="IdPermiso" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Permisos" Relationship="ControlRutasModel.FK_UsuariosPermisos_Permisos" FromRole="UsuariosPermisos" ToRole="Permisos" />
+          <NavigationProperty Name="Usuarios" Relationship="ControlRutasModel.FK_UsuariosPermisos_Usuarios" FromRole="UsuariosPermisos" ToRole="Usuarios" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Type="ControlRutasModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ControlRutasModel.AspNetUserClaims" Role="AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Type="ControlRutasModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ControlRutasModel.AspNetUserLogins" Role="AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MediosTra__idCod__6B24EA82">
+          <End Type="ControlRutasModel.EstablecimientosEducativos" Role="EstablecimientosEducativos" Multiplicity="1" />
+          <End Type="ControlRutasModel.MediosTransporte" Role="MediosTransporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstablecimientosEducativos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MediosTransporte">
+              <PropertyRef Name="IdCodigoEstablecimiento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Estudiantes_EstablecimientosEducativos">
+          <End Type="ControlRutasModel.EstablecimientosEducativos" Role="EstablecimientosEducativos" Multiplicity="1" />
+          <End Type="ControlRutasModel.Estudiantes" Role="Estudiantes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstablecimientosEducativos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Estudiantes">
+              <PropertyRef Name="IdEstablecimientoEducativo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsuariosEstablecimientos_EstablecimientosEducativos">
+          <End Type="ControlRutasModel.EstablecimientosEducativos" Role="EstablecimientosEducativos" Multiplicity="1" />
+          <End Type="ControlRutasModel.UsuariosEstablecimientos" Role="UsuariosEstablecimientos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstablecimientosEducativos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsuariosEstablecimientos">
+              <PropertyRef Name="IdEstablecimientoEducativo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Estudiant__idCod__72C60C4A">
+          <End Type="ControlRutasModel.Estudiantes" Role="Estudiantes" Multiplicity="1" />
+          <End Type="ControlRutasModel.EstudiantesMediosTransporte" Role="EstudiantesMediosTransporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estudiantes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EstudiantesMediosTransporte">
+              <PropertyRef Name="IdEstudiante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Eventos__idEstud__7F2BE32F">
+          <End Type="ControlRutasModel.Estudiantes" Role="Estudiantes" Multiplicity="1" />
+          <End Type="ControlRutasModel.Eventos" Role="Eventos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estudiantes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Eventos">
+              <PropertyRef Name="IdEstudiante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuariosE__idEst__6383C8BA">
+          <End Type="ControlRutasModel.Estudiantes" Role="Estudiantes" Multiplicity="1" />
+          <End Type="ControlRutasModel.UsuariosEstudiantes" Role="UsuariosEstudiantes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estudiantes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsuariosEstudiantes">
+              <PropertyRef Name="IdEstudiante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Estudiant__idCod__73BA3083">
+          <End Type="ControlRutasModel.MediosTransporte" Role="MediosTransporte" Multiplicity="1" />
+          <End Type="ControlRutasModel.EstudiantesMediosTransporte" Role="EstudiantesMediosTransporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediosTransporte">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EstudiantesMediosTransporte">
+              <PropertyRef Name="IdMedioTransporte" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__NoUsoRuta__idEst__797309D9">
+          <End Type="ControlRutasModel.EstudiantesMediosTransporte" Role="EstudiantesMediosTransporte" Multiplicity="1" />
+          <End Type="ControlRutasModel.NoUsoRutasMediosTransporte" Role="NoUsoRutasMediosTransporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstudiantesMediosTransporte">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NoUsoRutasMediosTransporte">
+              <PropertyRef Name="IdEstudianteMedioTransporte" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RutasMedi__idEst__76969D2E">
+          <End Type="ControlRutasModel.EstudiantesMediosTransporte" Role="EstudiantesMediosTransporte" Multiplicity="1" />
+          <End Type="ControlRutasModel.RutasMediosTransporte" Role="RutasMediosTransporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstudiantesMediosTransporte">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RutasMediosTransporte">
+              <PropertyRef Name="IdEstudianteMedioTransporte" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Eventos__idTipoE__7E37BEF6">
           <End Type="ControlRutasModel.TiposEventos" Role="TiposEventos" Multiplicity="1" />
           <End Type="ControlRutasModel.Eventos" Role="Eventos" Multiplicity="*" />
@@ -1005,6 +1281,18 @@
             </Principal>
             <Dependent Role="Eventos">
               <PropertyRef Name="IdTipoEvento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MediosTra__idCod__693CA210">
+          <End Type="ControlRutasModel.Usuarios" Role="Usuarios" Multiplicity="1" />
+          <End Type="ControlRutasModel.MediosTransporte" Role="MediosTransporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MediosTransporte">
+              <PropertyRef Name="IdCodigoPiloto" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1032,49 +1320,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="UsuariosEstablecimientos">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="GUID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
-          <Property Name="IdEstablecimientoEducativo" Type="Int32" Nullable="false" />
-          <Property Name="Activo" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Usuarios" Relationship="ControlRutasModel.FK_UsuariosEstablecimientos_Usuarios" FromRole="UsuariosEstablecimientos" ToRole="Usuarios" />
-          <NavigationProperty Name="EstablecimientosEducativos" Relationship="ControlRutasModel.FK_UsuariosEstablecimientos_EstablecimientosEducativos" FromRole="UsuariosEstablecimientos" ToRole="EstablecimientosEducativos" />
-        </EntityType>
-        <EntityType Name="Usuarios">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="GUID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="PrimerNombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="SegundoNombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PrimerApellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="SegundoApellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="NumeroTelefono" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IdTipoUsuario" Type="Int32" Nullable="false" />
-          <Property Name="Estado" Type="Int32" Nullable="false" />
-          <Property Name="MessageToken" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="MediosTransporte" Relationship="ControlRutasModel.FK__MediosTra__idCod__693CA210" FromRole="Usuarios" ToRole="MediosTransporte" />
-          <NavigationProperty Name="TiposUsuarios" Relationship="ControlRutasModel.FK_Usuarios_TiposUsuarios" FromRole="Usuarios" ToRole="TiposUsuarios" />
-          <NavigationProperty Name="UsuariosEstudiantes" Relationship="ControlRutasModel.FK__UsuariosE__idUsu__628FA481" FromRole="Usuarios" ToRole="UsuariosEstudiantes" />
-          <NavigationProperty Name="UsuariosMediosTransporte" Relationship="ControlRutasModel.FK__UsuariosM__idCod__6EF57B66" FromRole="Usuarios" ToRole="UsuariosMediosTransporte" />
-          <NavigationProperty Name="UsuariosEstablecimientos" Relationship="ControlRutasModel.FK_UsuariosEstablecimientos_Usuarios" FromRole="Usuarios" ToRole="UsuariosEstablecimientos" />
-          <NavigationProperty Name="UsuariosPermisos" Relationship="ControlRutasModel.FK_UsuariosPermisos_Usuarios" FromRole="Usuarios" ToRole="UsuariosPermisos" />
-        </EntityType>
-        <Association Name="FK__MediosTra__idCod__693CA210">
-          <End Type="ControlRutasModel.Usuarios" Role="Usuarios" Multiplicity="1" />
-          <End Type="ControlRutasModel.MediosTransporte" Role="MediosTransporte" Multiplicity="*" />
+        <Association Name="FK_PerfilesPermisos_Perfiles">
+          <End Type="ControlRutasModel.Perfiles" Role="Perfiles" Multiplicity="1" />
+          <End Type="ControlRutasModel.PerfilesPermisos" Role="PerfilesPermisos" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Usuarios">
+            <Principal Role="Perfiles">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="MediosTransporte">
-              <PropertyRef Name="IdCodigoPiloto" />
+            <Dependent Role="PerfilesPermisos">
+              <PropertyRef Name="IdPerfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PerfilesPermisos_Permisos">
+          <End Type="ControlRutasModel.Permisos" Role="Permisos" Multiplicity="1" />
+          <End Type="ControlRutasModel.PerfilesPermisos" Role="PerfilesPermisos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permisos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PerfilesPermisos">
+              <PropertyRef Name="IdPermiso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsuariosPermisos_Permisos">
+          <End Type="ControlRutasModel.Permisos" Role="Permisos" Multiplicity="1" />
+          <End Type="ControlRutasModel.UsuariosPermisos" Role="UsuariosPermisos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permisos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsuariosPermisos">
+              <PropertyRef Name="IdPermiso" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1126,116 +1404,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="RutasMediosTransporte">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="GUID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="IdEstudianteMedioTransporte" Type="Int32" Nullable="false" />
-          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Grado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DireccionOrigen" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="LatitudOrigen" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LongitudOrigen" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DireccionDestino" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="LatitudDestino" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LongitudDestino" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Orden" Type="Int32" Nullable="false" />
-          <Property Name="HoraSalida" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="HoraLlegada" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Estado" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="EstudiantesMediosTransporte" Relationship="ControlRutasModel.FK__RutasMedi__idEst__76969D2E" FromRole="RutasMediosTransporte" ToRole="EstudiantesMediosTransporte" />
-        </EntityType>
-        <EntityType Name="NoUsoRutasMediosTransporte">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="GUID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="IdEstudianteMedioTransporte" Type="Int32" Nullable="false" />
-          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Motivo" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="EstudiantesMediosTransporte" Relationship="ControlRutasModel.FK__NoUsoRuta__idEst__797309D9" FromRole="NoUsoRutasMediosTransporte" ToRole="EstudiantesMediosTransporte" />
-        </EntityType>
-        <EntityType Name="Perfiles">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="GUID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PerfilesPermisos" Relationship="ControlRutasModel.FK_PerfilesPermisos_Perfiles" FromRole="Perfiles" ToRole="PerfilesPermisos" />
-        </EntityType>
-        <EntityType Name="PerfilesPermisos">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="GUID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdPerfil" Type="Int32" Nullable="false" />
-          <Property Name="IdPermiso" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Perfiles" Relationship="ControlRutasModel.FK_PerfilesPermisos_Perfiles" FromRole="PerfilesPermisos" ToRole="Perfiles" />
-          <NavigationProperty Name="Permisos" Relationship="ControlRutasModel.FK_PerfilesPermisos_Permisos" FromRole="PerfilesPermisos" ToRole="Permisos" />
-        </EntityType>
-        <EntityType Name="Permisos">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="GUID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Acceso" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PerfilesPermisos" Relationship="ControlRutasModel.FK_PerfilesPermisos_Permisos" FromRole="Permisos" ToRole="PerfilesPermisos" />
-          <NavigationProperty Name="UsuariosPermisos" Relationship="ControlRutasModel.FK_UsuariosPermisos_Permisos" FromRole="Permisos" ToRole="UsuariosPermisos" />
-        </EntityType>
-        <EntityType Name="UsuariosPermisos">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="GUID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
-          <Property Name="IdPermiso" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Permisos" Relationship="ControlRutasModel.FK_UsuariosPermisos_Permisos" FromRole="UsuariosPermisos" ToRole="Permisos" />
-          <NavigationProperty Name="Usuarios" Relationship="ControlRutasModel.FK_UsuariosPermisos_Usuarios" FromRole="UsuariosPermisos" ToRole="Usuarios" />
-        </EntityType>
-        <Association Name="FK_PerfilesPermisos_Perfiles">
-          <End Type="ControlRutasModel.Perfiles" Role="Perfiles" Multiplicity="1" />
-          <End Type="ControlRutasModel.PerfilesPermisos" Role="PerfilesPermisos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Perfiles">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PerfilesPermisos">
-              <PropertyRef Name="IdPerfil" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PerfilesPermisos_Permisos">
-          <End Type="ControlRutasModel.Permisos" Role="Permisos" Multiplicity="1" />
-          <End Type="ControlRutasModel.PerfilesPermisos" Role="PerfilesPermisos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Permisos">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PerfilesPermisos">
-              <PropertyRef Name="IdPermiso" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UsuariosPermisos_Permisos">
-          <End Type="ControlRutasModel.Permisos" Role="Permisos" Multiplicity="1" />
-          <End Type="ControlRutasModel.UsuariosPermisos" Role="UsuariosPermisos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Permisos">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UsuariosPermisos">
-              <PropertyRef Name="IdPermiso" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_UsuariosPermisos_Usuarios">
           <End Type="ControlRutasModel.Usuarios" Role="Usuarios" Multiplicity="1" />
           <End Type="ControlRutasModel.UsuariosPermisos" Role="UsuariosPermisos" Multiplicity="*" />
@@ -1248,177 +1416,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="EstudiantesMediosTransporte">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="GUID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="IdEstudiante" Type="Int32" Nullable="false" />
-          <Property Name="IdMedioTransporte" Type="Int32" Nullable="false" />
-          <Property Name="DireccionOrigen" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="LatitudOrigen" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LongitudOrigen" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DireccionDestino" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="LatitudDestino" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LongitudDestino" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Orden" Type="Int32" Nullable="false" />
-          <Property Name="Lunes" Type="Boolean" Nullable="false" />
-          <Property Name="Martes" Type="Boolean" Nullable="false" />
-          <Property Name="Miercoles" Type="Boolean" Nullable="false" />
-          <Property Name="Jueves" Type="Boolean" Nullable="false" />
-          <Property Name="Viernes" Type="Boolean" Nullable="false" />
-          <Property Name="Sabado" Type="Boolean" Nullable="false" />
-          <Property Name="Domingo" Type="Boolean" Nullable="false" />
-          <Property Name="Activo" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="MediosTransporte" Relationship="ControlRutasModel.FK__Estudiant__idCod__73BA3083" FromRole="EstudiantesMediosTransporte" ToRole="MediosTransporte" />
-          <NavigationProperty Name="NoUsoRutasMediosTransporte" Relationship="ControlRutasModel.FK__NoUsoRuta__idEst__797309D9" FromRole="EstudiantesMediosTransporte" ToRole="NoUsoRutasMediosTransporte" />
-          <NavigationProperty Name="RutasMediosTransporte" Relationship="ControlRutasModel.FK__RutasMedi__idEst__76969D2E" FromRole="EstudiantesMediosTransporte" ToRole="RutasMediosTransporte" />
-          <NavigationProperty Name="Estudiantes" Relationship="ControlRutasModel.FK__Estudiant__idCod__72C60C4A" FromRole="EstudiantesMediosTransporte" ToRole="Estudiantes" />
-        </EntityType>
-        <Association Name="FK__Estudiant__idCod__73BA3083">
-          <End Type="ControlRutasModel.MediosTransporte" Role="MediosTransporte" Multiplicity="1" />
-          <End Type="ControlRutasModel.EstudiantesMediosTransporte" Role="EstudiantesMediosTransporte" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MediosTransporte">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="EstudiantesMediosTransporte">
-              <PropertyRef Name="IdMedioTransporte" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__NoUsoRuta__idEst__797309D9">
-          <End Type="ControlRutasModel.EstudiantesMediosTransporte" Role="EstudiantesMediosTransporte" Multiplicity="1" />
-          <End Type="ControlRutasModel.NoUsoRutasMediosTransporte" Role="NoUsoRutasMediosTransporte" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EstudiantesMediosTransporte">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="NoUsoRutasMediosTransporte">
-              <PropertyRef Name="IdEstudianteMedioTransporte" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__RutasMedi__idEst__76969D2E">
-          <End Type="ControlRutasModel.EstudiantesMediosTransporte" Role="EstudiantesMediosTransporte" Multiplicity="1" />
-          <End Type="ControlRutasModel.RutasMediosTransporte" Role="RutasMediosTransporte" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EstudiantesMediosTransporte">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="RutasMediosTransporte">
-              <PropertyRef Name="IdEstudianteMedioTransporte" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Estudiantes">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="GUID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="PrimerNombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="SegundoNombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PrimerApellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="SegundoApellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdEstablecimientoEducativo" Type="Int32" Nullable="false" />
-          <Property Name="Estado" Type="Boolean" Nullable="false" />
-          <Property Name="Grado" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Seccion" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="Identificacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="EstudiantesMediosTransporte" Relationship="ControlRutasModel.FK__Estudiant__idCod__72C60C4A" FromRole="Estudiantes" ToRole="EstudiantesMediosTransporte" />
-          <NavigationProperty Name="Eventos" Relationship="ControlRutasModel.FK__Eventos__idEstud__7F2BE32F" FromRole="Estudiantes" ToRole="Eventos" />
-          <NavigationProperty Name="UsuariosEstudiantes" Relationship="ControlRutasModel.FK__UsuariosE__idEst__6383C8BA" FromRole="Estudiantes" ToRole="UsuariosEstudiantes" />
-          <NavigationProperty Name="EstablecimientosEducativos" Relationship="ControlRutasModel.FK_Estudiantes_EstablecimientosEducativos" FromRole="Estudiantes" ToRole="EstablecimientosEducativos" />
-        </EntityType>
-        <Association Name="FK__Estudiant__idCod__72C60C4A">
-          <End Type="ControlRutasModel.Estudiantes" Role="Estudiantes" Multiplicity="1" />
-          <End Type="ControlRutasModel.EstudiantesMediosTransporte" Role="EstudiantesMediosTransporte" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Estudiantes">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="EstudiantesMediosTransporte">
-              <PropertyRef Name="IdEstudiante" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Eventos__idEstud__7F2BE32F">
-          <End Type="ControlRutasModel.Estudiantes" Role="Estudiantes" Multiplicity="1" />
-          <End Type="ControlRutasModel.Eventos" Role="Eventos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Estudiantes">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Eventos">
-              <PropertyRef Name="IdEstudiante" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__UsuariosE__idEst__6383C8BA">
-          <End Type="ControlRutasModel.Estudiantes" Role="Estudiantes" Multiplicity="1" />
-          <End Type="ControlRutasModel.UsuariosEstudiantes" Role="UsuariosEstudiantes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Estudiantes">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UsuariosEstudiantes">
-              <PropertyRef Name="IdEstudiante" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="EstablecimientosEducativos">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="GUID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="Latitud" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Longitud" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="Boolean" Nullable="false" />
-          <Property Name="Foto" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="MediosTransporte" Relationship="ControlRutasModel.FK__MediosTra__idCod__6B24EA82" FromRole="EstablecimientosEducativos" ToRole="MediosTransporte" />
-          <NavigationProperty Name="Estudiantes" Relationship="ControlRutasModel.FK_Estudiantes_EstablecimientosEducativos" FromRole="EstablecimientosEducativos" ToRole="Estudiantes" />
-          <NavigationProperty Name="UsuariosEstablecimientos" Relationship="ControlRutasModel.FK_UsuariosEstablecimientos_EstablecimientosEducativos" FromRole="EstablecimientosEducativos" ToRole="UsuariosEstablecimientos" />
-        </EntityType>
-        <Association Name="FK__MediosTra__idCod__6B24EA82">
-          <End Type="ControlRutasModel.EstablecimientosEducativos" Role="EstablecimientosEducativos" Multiplicity="1" />
-          <End Type="ControlRutasModel.MediosTransporte" Role="MediosTransporte" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EstablecimientosEducativos">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="MediosTransporte">
-              <PropertyRef Name="IdCodigoEstablecimiento" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Estudiantes_EstablecimientosEducativos">
-          <End Type="ControlRutasModel.EstablecimientosEducativos" Role="EstablecimientosEducativos" Multiplicity="1" />
-          <End Type="ControlRutasModel.Estudiantes" Role="Estudiantes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EstablecimientosEducativos">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Estudiantes">
-              <PropertyRef Name="IdEstablecimientoEducativo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UsuariosEstablecimientos_EstablecimientosEducativos">
-          <End Type="ControlRutasModel.EstablecimientosEducativos" Role="EstablecimientosEducativos" Multiplicity="1" />
-          <End Type="ControlRutasModel.UsuariosEstablecimientos" Role="UsuariosEstablecimientos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EstablecimientosEducativos">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UsuariosEstablecimientos">
-              <PropertyRef Name="IdEstablecimientoEducativo" />
-            </Dependent>
-          </ReferentialConstraint>
+        <Association Name="AspNetUserRoles">
+          <End Type="ControlRutasModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
+          <End Type="ControlRutasModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -1471,14 +1471,62 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="ControlRutasModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetUsers">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-            <EndProperty Name="AspNetRoles">
-              <ScalarProperty Name="Id" ColumnName="RoleId" />
-            </EndProperty>
-          </AssociationSetMapping>
+          <EntitySetMapping Name="EstablecimientosEducativos">
+            <EntityTypeMapping TypeName="ControlRutasModel.EstablecimientosEducativos">
+              <MappingFragment StoreEntitySet="EstablecimientosEducativos">
+                <ScalarProperty Name="Foto" ColumnName="Foto" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Longitud" ColumnName="Longitud" />
+                <ScalarProperty Name="Latitud" ColumnName="Latitud" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estudiantes">
+            <EntityTypeMapping TypeName="ControlRutasModel.Estudiantes">
+              <MappingFragment StoreEntitySet="Estudiantes">
+                <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
+                <ScalarProperty Name="Seccion" ColumnName="Seccion" />
+                <ScalarProperty Name="Grado" ColumnName="Grado" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdEstablecimientoEducativo" ColumnName="IdEstablecimientoEducativo" />
+                <ScalarProperty Name="SegundoApellido" ColumnName="SegundoApellido" />
+                <ScalarProperty Name="PrimerApellido" ColumnName="PrimerApellido" />
+                <ScalarProperty Name="SegundoNombre" ColumnName="SegundoNombre" />
+                <ScalarProperty Name="PrimerNombre" ColumnName="PrimerNombre" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EstudiantesMediosTransporte">
+            <EntityTypeMapping TypeName="ControlRutasModel.EstudiantesMediosTransporte">
+              <MappingFragment StoreEntitySet="EstudiantesMediosTransporte">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Domingo" ColumnName="Domingo" />
+                <ScalarProperty Name="Sabado" ColumnName="Sabado" />
+                <ScalarProperty Name="Viernes" ColumnName="Viernes" />
+                <ScalarProperty Name="Jueves" ColumnName="Jueves" />
+                <ScalarProperty Name="Miercoles" ColumnName="Miercoles" />
+                <ScalarProperty Name="Martes" ColumnName="Martes" />
+                <ScalarProperty Name="Lunes" ColumnName="Lunes" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="LongitudDestino" ColumnName="LongitudDestino" />
+                <ScalarProperty Name="LatitudDestino" ColumnName="LatitudDestino" />
+                <ScalarProperty Name="DireccionDestino" ColumnName="DireccionDestino" />
+                <ScalarProperty Name="LongitudOrigen" ColumnName="LongitudOrigen" />
+                <ScalarProperty Name="LatitudOrigen" ColumnName="LatitudOrigen" />
+                <ScalarProperty Name="DireccionOrigen" ColumnName="DireccionOrigen" />
+                <ScalarProperty Name="IdMedioTransporte" ColumnName="IdMedioTransporte" />
+                <ScalarProperty Name="IdEstudiante" ColumnName="IdEstudiante" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Eventos">
             <EntityTypeMapping TypeName="ControlRutasModel.Eventos">
               <MappingFragment StoreEntitySet="Eventos">
@@ -1501,107 +1549,6 @@
                 <ScalarProperty Name="IdCodigoEstablecimiento" ColumnName="IdCodigoEstablecimiento" />
                 <ScalarProperty Name="IdCodigoDueño" ColumnName="IdCodigoDueño" />
                 <ScalarProperty Name="IdCodigoPiloto" ColumnName="IdCodigoPiloto" />
-                <ScalarProperty Name="GUID" ColumnName="GUID" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TiposEventos">
-            <EntityTypeMapping TypeName="ControlRutasModel.TiposEventos">
-              <MappingFragment StoreEntitySet="TiposEventos">
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="EventoEstablecimiento" ColumnName="EventoEstablecimiento" />
-                <ScalarProperty Name="EventoDueño" ColumnName="EventoDueño" />
-                <ScalarProperty Name="EventoPiloto" ColumnName="EventoPiloto" />
-                <ScalarProperty Name="EventoPadres" ColumnName="EventoPadres" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="GUID" ColumnName="GUID" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TiposMediosTransporte">
-            <EntityTypeMapping TypeName="ControlRutasModel.TiposMediosTransporte">
-              <MappingFragment StoreEntitySet="TiposMediosTransporte">
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="GUID" ColumnName="GUID" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TiposUsuarios">
-            <EntityTypeMapping TypeName="ControlRutasModel.TiposUsuarios">
-              <MappingFragment StoreEntitySet="TiposUsuarios">
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="GUID" ColumnName="GUID" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UsuariosEstudiantes">
-            <EntityTypeMapping TypeName="ControlRutasModel.UsuariosEstudiantes">
-              <MappingFragment StoreEntitySet="UsuariosEstudiantes">
-                <ScalarProperty Name="IdEstudiante" ColumnName="IdEstudiante" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="GUID" ColumnName="GUID" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UsuariosMediosTransporte">
-            <EntityTypeMapping TypeName="ControlRutasModel.UsuariosMediosTransporte">
-              <MappingFragment StoreEntitySet="UsuariosMediosTransporte">
-                <ScalarProperty Name="IdCodigoMedioTransporte" ColumnName="IdCodigoMedioTransporte" />
-                <ScalarProperty Name="IdCodigoUsuario" ColumnName="IdCodigoUsuario" />
-                <ScalarProperty Name="GUID" ColumnName="GUID" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UsuariosEstablecimientos">
-            <EntityTypeMapping TypeName="ControlRutasModel.UsuariosEstablecimientos">
-              <MappingFragment StoreEntitySet="UsuariosEstablecimientos">
-                <ScalarProperty Name="Activo" ColumnName="Activo" />
-                <ScalarProperty Name="IdEstablecimientoEducativo" ColumnName="IdEstablecimientoEducativo" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="GUID" ColumnName="GUID" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Usuarios">
-            <EntityTypeMapping TypeName="ControlRutasModel.Usuarios">
-              <MappingFragment StoreEntitySet="Usuarios">
-                <ScalarProperty Name="MessageToken" ColumnName="MessageToken" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="IdTipoUsuario" ColumnName="IdTipoUsuario" />
-                <ScalarProperty Name="NumeroTelefono" ColumnName="NumeroTelefono" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="SegundoApellido" ColumnName="SegundoApellido" />
-                <ScalarProperty Name="PrimerApellido" ColumnName="PrimerApellido" />
-                <ScalarProperty Name="SegundoNombre" ColumnName="SegundoNombre" />
-                <ScalarProperty Name="PrimerNombre" ColumnName="PrimerNombre" />
-                <ScalarProperty Name="GUID" ColumnName="GUID" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RutasMediosTransporte">
-            <EntityTypeMapping TypeName="ControlRutasModel.RutasMediosTransporte">
-              <MappingFragment StoreEntitySet="RutasMediosTransporte">
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="HoraLlegada" ColumnName="HoraLlegada" />
-                <ScalarProperty Name="HoraSalida" ColumnName="HoraSalida" />
-                <ScalarProperty Name="Orden" ColumnName="Orden" />
-                <ScalarProperty Name="LongitudDestino" ColumnName="LongitudDestino" />
-                <ScalarProperty Name="LatitudDestino" ColumnName="LatitudDestino" />
-                <ScalarProperty Name="DireccionDestino" ColumnName="DireccionDestino" />
-                <ScalarProperty Name="LongitudOrigen" ColumnName="LongitudOrigen" />
-                <ScalarProperty Name="LatitudOrigen" ColumnName="LatitudOrigen" />
-                <ScalarProperty Name="DireccionOrigen" ColumnName="DireccionOrigen" />
-                <ScalarProperty Name="Grado" ColumnName="Grado" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="IdEstudianteMedioTransporte" ColumnName="IdEstudianteMedioTransporte" />
                 <ScalarProperty Name="GUID" ColumnName="GUID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -1647,6 +1594,107 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="RutasMediosTransporte">
+            <EntityTypeMapping TypeName="ControlRutasModel.RutasMediosTransporte">
+              <MappingFragment StoreEntitySet="RutasMediosTransporte">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="HoraLlegada" ColumnName="HoraLlegada" />
+                <ScalarProperty Name="HoraSalida" ColumnName="HoraSalida" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="LongitudDestino" ColumnName="LongitudDestino" />
+                <ScalarProperty Name="LatitudDestino" ColumnName="LatitudDestino" />
+                <ScalarProperty Name="DireccionDestino" ColumnName="DireccionDestino" />
+                <ScalarProperty Name="LongitudOrigen" ColumnName="LongitudOrigen" />
+                <ScalarProperty Name="LatitudOrigen" ColumnName="LatitudOrigen" />
+                <ScalarProperty Name="DireccionOrigen" ColumnName="DireccionOrigen" />
+                <ScalarProperty Name="Grado" ColumnName="Grado" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="IdEstudianteMedioTransporte" ColumnName="IdEstudianteMedioTransporte" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TiposEventos">
+            <EntityTypeMapping TypeName="ControlRutasModel.TiposEventos">
+              <MappingFragment StoreEntitySet="TiposEventos">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="EventoEstablecimiento" ColumnName="EventoEstablecimiento" />
+                <ScalarProperty Name="EventoDueño" ColumnName="EventoDueño" />
+                <ScalarProperty Name="EventoPiloto" ColumnName="EventoPiloto" />
+                <ScalarProperty Name="EventoPadres" ColumnName="EventoPadres" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TiposMediosTransporte">
+            <EntityTypeMapping TypeName="ControlRutasModel.TiposMediosTransporte">
+              <MappingFragment StoreEntitySet="TiposMediosTransporte">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TiposUsuarios">
+            <EntityTypeMapping TypeName="ControlRutasModel.TiposUsuarios">
+              <MappingFragment StoreEntitySet="TiposUsuarios">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="ControlRutasModel.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="MessageToken" ColumnName="MessageToken" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdTipoUsuario" ColumnName="IdTipoUsuario" />
+                <ScalarProperty Name="NumeroTelefono" ColumnName="NumeroTelefono" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="SegundoApellido" ColumnName="SegundoApellido" />
+                <ScalarProperty Name="PrimerApellido" ColumnName="PrimerApellido" />
+                <ScalarProperty Name="SegundoNombre" ColumnName="SegundoNombre" />
+                <ScalarProperty Name="PrimerNombre" ColumnName="PrimerNombre" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsuariosEstablecimientos">
+            <EntityTypeMapping TypeName="ControlRutasModel.UsuariosEstablecimientos">
+              <MappingFragment StoreEntitySet="UsuariosEstablecimientos">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="IdEstablecimientoEducativo" ColumnName="IdEstablecimientoEducativo" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsuariosEstudiantes">
+            <EntityTypeMapping TypeName="ControlRutasModel.UsuariosEstudiantes">
+              <MappingFragment StoreEntitySet="UsuariosEstudiantes">
+                <ScalarProperty Name="IdEstudiante" ColumnName="IdEstudiante" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsuariosMediosTransporte">
+            <EntityTypeMapping TypeName="ControlRutasModel.UsuariosMediosTransporte">
+              <MappingFragment StoreEntitySet="UsuariosMediosTransporte">
+                <ScalarProperty Name="IdCodigoMedioTransporte" ColumnName="IdCodigoMedioTransporte" />
+                <ScalarProperty Name="IdCodigoUsuario" ColumnName="IdCodigoUsuario" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="UsuariosPermisos">
             <EntityTypeMapping TypeName="ControlRutasModel.UsuariosPermisos">
               <MappingFragment StoreEntitySet="UsuariosPermisos">
@@ -1657,83 +1705,35 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="EstudiantesMediosTransporte">
-            <EntityTypeMapping TypeName="ControlRutasModel.EstudiantesMediosTransporte">
-              <MappingFragment StoreEntitySet="EstudiantesMediosTransporte">
-                <ScalarProperty Name="Activo" ColumnName="Activo" />
-                <ScalarProperty Name="Domingo" ColumnName="Domingo" />
-                <ScalarProperty Name="Sabado" ColumnName="Sabado" />
-                <ScalarProperty Name="Viernes" ColumnName="Viernes" />
-                <ScalarProperty Name="Jueves" ColumnName="Jueves" />
-                <ScalarProperty Name="Miercoles" ColumnName="Miercoles" />
-                <ScalarProperty Name="Martes" ColumnName="Martes" />
-                <ScalarProperty Name="Lunes" ColumnName="Lunes" />
-                <ScalarProperty Name="Orden" ColumnName="Orden" />
-                <ScalarProperty Name="LongitudDestino" ColumnName="LongitudDestino" />
-                <ScalarProperty Name="LatitudDestino" ColumnName="LatitudDestino" />
-                <ScalarProperty Name="DireccionDestino" ColumnName="DireccionDestino" />
-                <ScalarProperty Name="LongitudOrigen" ColumnName="LongitudOrigen" />
-                <ScalarProperty Name="LatitudOrigen" ColumnName="LatitudOrigen" />
-                <ScalarProperty Name="DireccionOrigen" ColumnName="DireccionOrigen" />
-                <ScalarProperty Name="IdMedioTransporte" ColumnName="IdMedioTransporte" />
-                <ScalarProperty Name="IdEstudiante" ColumnName="IdEstudiante" />
-                <ScalarProperty Name="GUID" ColumnName="GUID" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Estudiantes">
-            <EntityTypeMapping TypeName="ControlRutasModel.Estudiantes">
-              <MappingFragment StoreEntitySet="Estudiantes">
-                <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
-                <ScalarProperty Name="Seccion" ColumnName="Seccion" />
-                <ScalarProperty Name="Grado" ColumnName="Grado" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="IdEstablecimientoEducativo" ColumnName="IdEstablecimientoEducativo" />
-                <ScalarProperty Name="SegundoApellido" ColumnName="SegundoApellido" />
-                <ScalarProperty Name="PrimerApellido" ColumnName="PrimerApellido" />
-                <ScalarProperty Name="SegundoNombre" ColumnName="SegundoNombre" />
-                <ScalarProperty Name="PrimerNombre" ColumnName="PrimerNombre" />
-                <ScalarProperty Name="GUID" ColumnName="GUID" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EstablecimientosEducativos">
-            <EntityTypeMapping TypeName="ControlRutasModel.EstablecimientosEducativos">
-              <MappingFragment StoreEntitySet="EstablecimientosEducativos">
-                <ScalarProperty Name="Foto" ColumnName="Foto" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Longitud" ColumnName="Longitud" />
-                <ScalarProperty Name="Latitud" ColumnName="Latitud" />
-                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="GUID" ColumnName="GUID" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          </EntityContainerMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="ControlRutasModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
-  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
-    <Connection>
-      <DesignerInfoPropertySet>
-        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
-      </DesignerInfoPropertySet>
-    </Connection>
-    <Options>
-      <DesignerInfoPropertySet>
-        <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
-      </DesignerInfoPropertySet>
-    </Options>
+  <edmx:Designer>
+    <edmx:Connection>
+      <edmx:DesignerInfoPropertySet>
+        <edmx:DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </edmx:DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <edmx:DesignerInfoPropertySet>
+        <edmx:DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <edmx:DesignerProperty Name="EnablePluralization" Value="false" />
+        <edmx:DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <edmx:DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <edmx:DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </edmx:DesignerInfoPropertySet>
+    </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
-    <Diagrams></Diagrams>
-  </Designer>
+    <edmx:Diagrams />
+  </edmx:Designer>
 </edmx:Edmx>

@@ -41,11 +41,11 @@ namespace ControlRutas.Data
         public bool Domingo { get; set; }
         public bool Activo { get; set; }
     
+        public virtual Estudiantes Estudiantes { get; set; }
         public virtual MediosTransporte MediosTransporte { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NoUsoRutasMediosTransporte> NoUsoRutasMediosTransporte { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RutasMediosTransporte> RutasMediosTransporte { get; set; }
-        public virtual Estudiantes Estudiantes { get; set; }
     }
 }
