@@ -293,6 +293,7 @@
     <Compile Include="Controllers\APIEstudiantesController.cs" />
     <Compile Include="Controllers\APIEventosController.cs" />
     <Compile Include="Controllers\APIMediosTransportesController.cs" />
+    <Compile Include="Controllers\APIUsuariosController.cs" />
     <Compile Include="Controllers\EstablecimientosEducativosController.cs" />
     <Compile Include="Controllers\EstudiantesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -578,6 +579,7 @@
     <Folder Include="Helpers\" />
     <Folder Include="Views\APIEventos\" />
     <Folder Include="Views\APIMediosTransportes\" />
+    <Folder Include="Views\APIUsuarios\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
