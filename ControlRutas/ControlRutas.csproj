@@ -296,6 +296,7 @@
     <Compile Include="Controllers\APIUsuariosController.cs" />
     <Compile Include="Controllers\EstablecimientosEducativosController.cs" />
     <Compile Include="Controllers\EstudiantesController.cs" />
+    <Compile Include="Controllers\EstudiantesMediosTransportesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UsuariosEstudiantesController.cs" />
