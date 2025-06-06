@@ -300,6 +300,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MediosTransportesController.cs" />
+    <Compile Include="Controllers\PerfilesController.cs" />
     <Compile Include="Controllers\UsuariosEstudiantesController.cs" />
     <Compile Include="Data\AspNetRoles.cs">
       <DependentUpon>ControlRutasModel.tt</DependentUpon>
